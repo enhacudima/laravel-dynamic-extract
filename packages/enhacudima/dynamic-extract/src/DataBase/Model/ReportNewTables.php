@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Enhacudima\DynamicExtract\DataBase\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,5 +12,5 @@ class ReportNewTables extends Model
     public $primaryKey = 'id';
 
     public $timestamps=true;
-     
+
 }

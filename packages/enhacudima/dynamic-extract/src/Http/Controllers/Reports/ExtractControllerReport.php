@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Extrat;
+namespace Enhacudima\DynamicExtract\Http\Controllers\Reports;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Auth;
-use Enhacudima\DynamicExtract\DataBase\ProcessedFiles;
+use Enhacudima\DynamicExtract\DataBase\Model\ProcessedFiles;
 use DB;
 use Carbon\Carbon;
 use App\Exports\RelatorioExport;
@@ -16,7 +16,7 @@ use Enhacudima\DynamicExtract\DataBase\Model\ReportNew;
 use Storage;
 
 
-class ReportExtratController extends Controller
+class ExtractControllerReport extends Controller
 {
 
         public function __construct()
@@ -86,7 +86,7 @@ class ReportExtratController extends Controller
         //dd($filterData);
         $data=[];
         $data['filename']=$filename;
-        $data['user_id']=Auth::user()->id;
+        $data['user_id']=Auth::user()->id ?? 0;
         $data['can']=$request->can;
         $data['filterData']=$filterData;
         ProcessedFiles::create($data);

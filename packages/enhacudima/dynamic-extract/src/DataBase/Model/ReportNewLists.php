@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Enhacudima\DynamicExtract\DataBase\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,5 +22,5 @@ class ReportNewLists extends Model
     {
         return $this->belongsTo('App\ReportNewFiltro','report_new_filtro_id','id');
     }
-    
+
 }

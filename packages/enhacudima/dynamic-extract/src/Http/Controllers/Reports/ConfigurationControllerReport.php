@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhacudima\DynamicExtract\Http\Controllers\Extrat;
+namespace Enhacudima\DynamicExtract\Http\Controllers\Reports;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -14,7 +14,7 @@ use Enhacudima\DynamicExtract\DataBase\Model\ReportNewLists;
 use Auth;
 use Enhacudima\DynamicExtract\DataBase\Model\ReportNewColumuns;
 
-class ReportConfigurationController extends Controller
+class ConfigurationControllerReport extends Controller
 {
 
       public function __construct()
