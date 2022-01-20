@@ -27,7 +27,8 @@ class ConfigurationControllerReport extends Controller
   	$data=ReportNew::get();
   	$filtros=ReportNewFiltroGroupo::get();
   	$tables=ReportNewTables::get();
-  	$permissions=DB::table('permissions')->orderBy('name','asc')->get();
+    $permissions=null;
+  	#$permissions=DB::table('permissions')->orderBy('name','asc')->get();
 
   	return view('extract-view::report.config.index',compact('data','filtros','tables','permissions'));
   }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProcessedFilesTable extends Migration
+class CreateReportNewFiltroTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateProcessedFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('processed_files', function (Blueprint $table) {
+        Schema::create('report_new_filtro', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('filename');
-            $table->string('path');
-            $table->string('can');
-            $table->longText('filterData');
-            $table->bigInteger('user_id');
+            $table->string('value');
+            $table->string('name');
+            $table->string('type');
             $table->integer('status')->default(1);
+
+             $table->foreignId('user_id')->constrained('users');
         });
     }
 
@@ -32,6 +32,6 @@ class CreateProcessedFilesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('processed_files');
+        Schema::dropIfExists('report_new_filtro');
     }
 }

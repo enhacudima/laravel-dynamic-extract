@@ -1,6 +1,6 @@
-@extends('adminlte::page')
+@extends('extract-view::vendor.layouts.master')
 
-@section('title','Bayport | Report Config')
+@section('title','Dynamic Extract | Report Config')
 
 @section('content_header')
     <h1><a class="btn btn-social-icon btn-github"  href="{{ url('report/config/filtro') }}"><i class="fa  fa-arrow-left"></i></a>
@@ -16,14 +16,14 @@
     </div>
     <div class="card-body">
 
-    <div class="card-body table-responsive no-padding">  
+    <div class="card-body table-responsive no-padding">
           <form method="post" id="list" action="{{url('report/config/filtro/edit/store')}}">
           @csrf
-                <input type="" name="user_id" value="{{Auth::user()->id}}" hidden="">
+                <input type="" name="user_id" value="{{Auth::user()->id ?? 0}}" hidden="">
                 <input type="" name="id" value="{{$data->id}}" hidden="">
 
-                <input type="text" name="name" required autofocus="" class="form-control" placeholder="Name" value="{{$data->name}}"><br>                
-                
+                <input type="text" name="name" required autofocus="" class="form-control" placeholder="Name" value="{{$data->name}}"><br>
+
                 <div class="">
                     <div class="form-group">
                         <strong>Filters</strong>
@@ -36,7 +36,7 @@
                         @endforeach
                     </div>
                 </div>
-              <br>  
+              <br>
               <button type="submit" class="btn ">Save changes</button>
           </form>
 

@@ -1,6 +1,6 @@
-@extends('adminlte::page')
+@extends('extract-view::vendor.layouts.master')
 
-@section('title','Bayport | Report Config')
+@section('title','Dynamic Extract | Report Config')
 
 @section('content_header')
     <h1><a class="btn btn-social-icon btn-github"  href="{{ url('report/config/filtro/filtros') }}"><i class="fa  fa-arrow-left"></i></a>
@@ -16,14 +16,14 @@
     </div>
     <div class="panel-body">
 
-    <div class="card-body table-responsive no-padding">  
+    <div class="card-body table-responsive no-padding">
           <form method="post" id="list" action="{{url('report/config/filtro/filtros/edit/store')}}">
           @csrf
-                <input type="" name="user_id" value="{{Auth::user()->id}}" hidden="">
+                <input type="" name="user_id" value="{{Auth::user()->id ?? 0}}" hidden="">
                 <input type="" name="id" value="{{$data->id}}" hidden="">
 
-                <input type="text" name="name" required autofocus="" class="form-control" placeholder="Name" value="{{$data->name}}"><br>                
-                <input type="text" name="value" required autofocus="" class="form-control" placeholder="Columun/Table" value="{{$data->value}}"><br> 
+                <input type="text" name="name" required autofocus="" class="form-control" placeholder="Name" value="{{$data->name}}"><br>
+                <input type="text" name="value" required autofocus="" class="form-control" placeholder="Columun/Table" value="{{$data->value}}"><br>
                 <select required="" name="type" required autofocus="" class="form-control">
                   <option value="{{$data->type}}"  selected="">{{$data->type}}</option>
                   <option value="date">date</option>
@@ -34,7 +34,7 @@
                   <option value="<=">less than "<="</option>
                   <option value=">=">greater than ">="</option>
                 </select>
-              <br>  
+              <br>
               <button type="submit" class="btn ">Save changes</button>
           </form>
 

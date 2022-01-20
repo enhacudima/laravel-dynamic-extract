@@ -1,11 +1,10 @@
 @extends('extract-view::vendor.layouts.master')
 
-@section('title','Bayport | My Report')
+@section('title','Dynamic Extract | Files')
 
 @section('content_header')
-    <h1>
      <a class="btn btn-social-icon btn-github" aria-hidden="true" href="{{url('meusficheiros/all/deletefile')}}" ><i class=" fas fa-trash-alt " style="color: red"></i> Delete All Files</a>
-    </h1>
+
 @stop
 
 @section('content')

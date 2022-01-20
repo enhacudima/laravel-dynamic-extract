@@ -1,13 +1,11 @@
-@extends('adminlte::page')
+@extends('extract-view::vendor.layouts.master')
 
-@section('title','Bayport | Report Config')
+@section('title','Dynamic Extract | Create New Group Filter')
 
 @section('content_header')
-    <h1>
       <a class="btn btn-social-icon btn-github"  href="{{ url('report/config') }}"><i class="fa  fa-arrow-left"></i></a>
-      <a class="btn btn-social-icon btn-github"  data-toggle="modal" data-target="#modal-primary" ><i class="fa  fa-plus"></i></a>
+      <a class="btn btn-social-icon btn-github"   data-bs-toggle="modal" data-bs-target="#exampleModal" ><i class="fa  fa-plus"></i></a>
       <a class="btn btn-social-icon btn-github " href="{{ url('report/config/filtro/filtros') }}"><i class="fa  fa-cog"></i></a>
-    </h1>
 @stop
 
 @section('content')
@@ -19,7 +17,7 @@
     </div>
     <div class="card-body">
 
-    <div class="card-body table-responsive no-padding">  
+    <div class="card-body table-responsive no-padding">
 
      <table id="example" class="table table-striped table-bordered" style="width:100%">
 
@@ -41,18 +39,18 @@
                 <tr>
                 <td>{{$value->id}}</td>
                 <td>{{$value->name}}</td>
-                <td>  
+                <td>
                     @foreach($value->sync_filtros as $filtro)
                         <span class="badge bg-defult">{{$filtro->filtros->name}}</span>
                     @endforeach
                 </td>
                 <td>
-                  <a class="fa fa-pencil-square-o btn btn-success btn-xs" aria-hidden="true" href="{{url('report/config/filtro/edit',$value->id)}}" > Modify</a> 
-                </td> 
+                  <a class="fa fa-pencil-square-o btn btn-success btn-xs" aria-hidden="true" href="{{url('report/config/filtro/edit',$value->id)}}" > Modify</a>
+                </td>
                 <td>{{$value->created_at}}</td>
                 <td>{{$value->updated_at->diffForHumans()}}</td>
-                <td><img src="{{asset('storage/uploads/avatars/'.$value->user->avatar)}}" class="img-circle" alt="User Image" width="25px" height="25px"> {{$value->user->name}} {{$value->user->lname}}</td>    
-                </tr>   
+                <td><img src="{{asset('storage/uploads/avatars/'.$value->user->avatar)}}" class="img-circle" alt="User Image" width="25px" height="25px"> {{$value->user->name}} {{$value->user->lname}}</td>
+                </tr>
                 </tr>
 
                 @endforeach
@@ -64,21 +62,20 @@
  </div>
 
 
-  <div class="modal modal-primary fade" id="modal-primary">
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span></button>
-          <h5 class="modal-title">Create New Group Filter</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Create New Group Filter</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
           <form method="post" id="list" action="{{url('report/config/filtro/store')}}">
           @csrf
             <div class="modal-body">
-                <input type="" name="user_id" value="{{Auth::user()->id}}" hidden="">
+                <input type="" name="user_id" value="{{Auth::user()->id ?? 0 }}" hidden="">
 
-                <input type="text" name="name" required autofocus="" class="form-control" placeholder="Name"><br>                
-                
+                <input type="text" name="name" required autofocus="" class="form-control" placeholder="Name"><br>
+
                 <div class="">
                     <div class="form-group">
                         <strong>Filters</strong>
@@ -90,11 +87,11 @@
                         @endforeach
                     </div>
                 </div>
-    
+
               </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-outline">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
             </div>
           </form>
       </div>

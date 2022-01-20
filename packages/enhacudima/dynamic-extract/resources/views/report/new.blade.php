@@ -1,12 +1,9 @@
-@extends('adminlte::page')
+@extends('extract-view::vendor.layouts.master')
 
-@section('title','Bayport | Report')
+@section('title','Dynamic Extract | New')
 
 @section('content_header')
-    <h1>
-        <a class="btn btn-social-icon btn-github"  href="{{ url()->previous() }}"><i class="fa  fa-arrow-left"></i></a>
-        <a class="btn btn-social-icon btn-github " href="{{ url('report/config') }}"><i class="fa  fa-cog"></i></a>
-    </h1>
+    <a class="btn btn-social-icon btn-github"  href="{{ url()->previous() }}"><i class="fa  fa-arrow-left"></i></a>
 @stop
 
 @section('content')
@@ -48,7 +45,7 @@
                                 @endif
                             @endforeach
                         </select> <br>
-                        
+
                         <div class="row" >
                                 <div class="col-md-6">
                                     <input class="form-control"  type="date" name="start"  >
