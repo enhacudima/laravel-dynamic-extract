@@ -26,7 +26,7 @@ class ExtractControllerReport extends Controller
   public function index()
   {
 
-      $data=ProcessedFiles::select('processed_files.*','users.name','users.lname','users.avatar')->join('users','processed_files.user_id','users.id')->orderby('processed_files.created_at','desc')->get();
+      $data=ProcessedFiles::select('processed_files.*','users.name')->join('users','processed_files.user_id','users.id')->orderby('processed_files.created_at','desc')->get();
 
       return view('extract-view::report.index',compact('data'));
   }

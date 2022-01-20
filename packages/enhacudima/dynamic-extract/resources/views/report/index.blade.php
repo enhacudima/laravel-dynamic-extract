@@ -1,12 +1,10 @@
-@extends('adminlte::page')
+@extends('extract-view::vendor.layouts.master')
 
 @section('title','Bayport | My Report')
 
 @section('content_header')
     <h1><a class="btn btn-social-icon btn-github"  href="{{ url()->previous() }}"><i class="fa  fa-arrow-left"></i></a>
-     @if (Auth::user()->can('view_all_files'))
      <a class="btn btn-social-icon btn-github" aria-hidden="true" href="{{url('meusficheiros/all/deletefile')}}" ><i class=" fas fa-trash-alt " style="color: red"></i></a>
-     @endif
     </h1>
 @stop
 
@@ -40,7 +38,6 @@
         <tbody>
             @if($data)
                 @foreach($data as $value)
-                  @if (Auth::user()->can('view_all_files') || (Auth::user()->can($value->can) && isset($value->can)) || Auth::user()->id == $value->user_id )
                     <tr>
                     <td>{{$value->id}}</td>
                     <td><img src="{{asset('storage/uploads/avatars/'.$value->avatar)}}" class="img-circle" alt="User Image" width="25px" height="25px"> {{$value->name}} {{$value->lname}}</td>
@@ -72,7 +69,6 @@
                         @endif
                     </td>
                     </tr>
-                   @endif
                 @endforeach
             @endif
         </tbody>
