@@ -10,10 +10,23 @@
 @stop
 
 @section('content')
+<div class="row">
+<div class="col-md-3">
+    <div class="list-group">
+    <a href="{{url('report/config')}}" class="list-group-item list-group-item-action" aria-current="true">
+        New Report
+    </a>
+    <a href="{{url('report/config/filtro')}}" class="list-group-item list-group-item-action">Group Filter</a>
+    <a href="{{url('report/config/filtro/filtros')}}" class="list-group-item list-group-item-action">Filter</a>
+    <a href="{{url('report/config/filtro/list')}}" class="list-group-item list-group-item-action active">Filter List</a>
+    <a href="{{url('report/config/filtro/columuns')}}" class="list-group-item list-group-item-action">Filter Columuns</a>
+    </div>
+</div>
+ <div class="col-md-9">
 
  <div class="card card-solid card-default">
    <div class="card-header">
-              <center><h3 class="card-title"><strong><i class="fa fa-fw fa-folder-open"></i> Report Configuration Filter List </strong></h3></center>
+              <center><h5 class="card-title"><strong><i class="fa fa-fw fa-folder-open"></i> Filter List </strong></h5></center>
 
     </div>
     <div class="panel-body">
@@ -57,7 +70,8 @@
     </table>
   </div>
 </div>
- </div>
+</div>
+</div>
 
 
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -1,6 +1,6 @@
 @extends('extract-view::vendor.layouts.master')
 
-@section('title','Dynamic Extract | Report Config')
+@section('title','Dynamic Extract | Config Edit List')
 
 @section('content_header')
     <h1><a class="btn btn-social-icon btn-github"  href="{{ url('report/config/filtro/list') }}"><i class="fa  fa-arrow-left"></i></a>
@@ -11,7 +11,7 @@
 
  <div class="card card-solid card-default">
    <div class="card-header">
-              <center><h3 class="card-title"><strong><i class="fa fa-fw fa-folder-open"></i> Report Configuration List </strong></h3></center>
+              <center><h5 class="card-title"><strong><i class="fa fa-fw fa-folder-open"></i> Edit Filter List </strong></h5></center>
 
     </div>
     <div class="panel-body">

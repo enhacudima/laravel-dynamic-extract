@@ -1,6 +1,6 @@
 @extends('extract-view::vendor.layouts.master')
 
-@section('title','Dynamic Extract | Report Config')
+@section('title','Dynamic Extract | Config Report')
 
 @section('content_header')
       <a class="btn btn-social-icon btn-github"  href="{{ url('report/config/filtro') }}"><i class="fa  fa-arrow-left"></i></a>
@@ -10,10 +10,23 @@
 @stop
 
 @section('content')
+<div class="row">
+<div class="col-md-3">
+    <div class="list-group">
+    <a href="{{url('report/config')}}" class="list-group-item list-group-item-action " aria-current="true">
+        New Report
+    </a>
+    <a href="{{url('report/config/filtro')}}" class="list-group-item list-group-item-action">Group Filter</a>
+    <a href="{{url('report/config/filtro/filtros')}}" class="list-group-item list-group-item-action active">Filter</a>
+    <a href="{{url('report/config/filtro/list')}}" class="list-group-item list-group-item-action">Filter List</a>
+    <a href="{{url('report/config/filtro/columuns')}}" class="list-group-item list-group-item-action">Filter Columuns</a>
+    </div>
+</div>
+ <div class="col-md-9">
 
  <div class="card card-solid card-default">
    <div class="card-header">
-              <center><h3 class="card-title"><strong><i class="fa fa-fw fa-folder-open"></i> Report Configuration Filter </strong></h3></center>
+              <center><h5 class="card-title"><strong><i class="fa fa-fw fa-folder-open"></i> Filter </strong></h5></center>
 
     </div>
     <div class="panel-body">
@@ -69,8 +82,8 @@
     </table>
   </div>
 </div>
- </div>
-
+</div>
+</div>
 
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
