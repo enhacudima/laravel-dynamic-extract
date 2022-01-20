@@ -3,8 +3,8 @@
 @section('title','Bayport | My Report')
 
 @section('content_header')
-    <h1><a class="btn btn-social-icon btn-github"  href="{{ url()->previous() }}"><i class="fa  fa-arrow-left"></i></a>
-     <a class="btn btn-social-icon btn-github" aria-hidden="true" href="{{url('meusficheiros/all/deletefile')}}" ><i class=" fas fa-trash-alt " style="color: red"></i></a>
+    <h1>
+     <a class="btn btn-social-icon btn-github" aria-hidden="true" href="{{url('meusficheiros/all/deletefile')}}" ><i class=" fas fa-trash-alt " style="color: red"></i> Delete All Files</a>
     </h1>
 @stop
 
@@ -13,7 +13,7 @@
  <div class="card">
    <div class="card-header border-0">
     <div class="d-flex justify-content-between">
-              <center><h3 class="card-title"><strong><i class="fa fa-fw fa-bookmark"></i> My Report </strong></h3></center>
+              <center><h3 class="card-title"><strong><i class="fa fa-fw fa-bookmark"></i> Files </strong></h3></center>
     </div>
 
     </div>

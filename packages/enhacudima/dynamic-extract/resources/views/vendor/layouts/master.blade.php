@@ -18,6 +18,7 @@
     @yield('content_header')
     <div class="container">
         @yield('content')
+         @include('extract-view::vendor.layouts.footer')
     </div>
 
     <!-- DataTable -->
