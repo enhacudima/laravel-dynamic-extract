@@ -12,7 +12,7 @@
  <div class="card">
    <div class="card-header border-0">
     <div class="d-flex justify-content-between">
-              <center><h3 class="card-title"><strong><i class="fa fa-fw fa-bookmark"></i> Files </strong></h3></center>
+              <center><h5 class="card-title"><strong><i class="fa fa-fw fa-bookmark"></i> Files </strong></h5></center>
     </div>
 
     </div>

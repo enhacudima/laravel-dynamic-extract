@@ -98,11 +98,14 @@
                 <input type="" name="user_id" value="{{Auth::user()->id ?? 0}}" hidden="">
 
                 <input type="text" name="name" required autofocus="" class="form-control" placeholder="Name"><br>
-                <input type="text" name="value" required autofocus="" class="form-control" placeholder="Columun/Table"><br>
+                <input type="text" name="value" required autofocus="" class="form-control" placeholder="Columun/Table">
+                <small>Table name for filter type "columuns"</small>
+                <br>
+                <br>
                 <select required="" name="type" required autofocus="" class="form-control">
                   <option value="" disabled="" selected="">Select type</option>
                   <option value="date">date</option>
-                  <option value="pesquisa">pesquisa</option>
+                  <option value="pesquisa">search</option>
                   <option value="list">list</option>
                   <option value="group">group by</option>
                   <option value="columuns">columuns</option>

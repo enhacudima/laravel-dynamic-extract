@@ -2,7 +2,9 @@
 namespace Enhacudima\DynamicExtract\Providers;
 
 use Illuminate\Support\ServiceProvider;
-
+use Enhacudima\DynamicExtract\Console\Commands\InstallCommand;
+use Enhacudima\DynamicExtract\Console\Commands\InstallTables;
+use Enhacudima\DynamicExtract\Console\Commands\InstallTablesList;
 class DynamicExtractServiceProvider extends ServiceProvider
 {
     /**
@@ -17,12 +19,24 @@ class DynamicExtractServiceProvider extends ServiceProvider
             __DIR__.'/../../resources/assets' => public_path('enhacudima/dynamic-extract'),
         ], 'public');
 
+        $this->publishes([
+            __DIR__.'/../../src/DataBase/Migration' => database_path('migrations')
+        ], 'dynamic-extract-migrations');
+
         if ($this->app->runningInConsole()) {
 
             $this->publishes([
             __DIR__.'/../../config/config.php' => config_path('dynamic-extract.php'),
             ], 'config');
 
+        }
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                InstallCommand::class,
+                InstallTables::class,
+                InstallTablesList::class,
+            ]);
         }
     }
 
