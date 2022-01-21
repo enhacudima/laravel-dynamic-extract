@@ -55,11 +55,11 @@
                 <td>{{$value->name}}</td>
                 <td>
                     @foreach($value->sync_filtros as $filtro)
-                        <span class="badge bg-defult">{{$filtro->filtros->name}}</span>
+                        <span class="badge bg-primary">{{$filtro->filtros->name}}</span>
                     @endforeach
                 </td>
                 <td>
-                  <a class="fa fa-pencil-square-o btn btn-success btn-xs" aria-hidden="true" href="{{url('report/config/filtro/edit',$value->id)}}" > Modify</a>
+                  <a class="btn btn-success btn-sm" aria-hidden="true" href="{{url('report/config/filtro/edit',$value->id)}}" ><i class="fas fa-edit"></i> Modify</a>
                 </td>
                 <td>{{$value->created_at}}</td>
                 <td>{{$value->updated_at->diffForHumans()}}</td>
@@ -94,12 +94,21 @@
                 <div class="">
                     <div class="form-group">
                         <strong>Filters</strong>
-                        <br/>
-                        @foreach($filtros as $value)
-                        <label>{{ Form::checkbox('filtros[]', $value->id, false, array('class' => 'name')) }}
-                        {{ $value->name }}</label>
-                        <br/>
-                        @endforeach
+                            <br>
+                            @if($filtros)
+                            <div class="flexCheckLists" id="flexCheckLists" >
+                                <div class="form-group">
+                                    @foreach($filtros as $value)
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="filtros[]" value="{{ $value->id }}" id=" {{ $value->id }}" >
+                                        <label class="form-check-label" for=" {{ $value->id }}">
+                                            {{ $value->name }}
+                                        </label>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                            @endif
                     </div>
                 </div>
 

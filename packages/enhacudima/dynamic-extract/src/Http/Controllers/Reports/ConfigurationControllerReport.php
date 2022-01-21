@@ -168,8 +168,9 @@ class ConfigurationControllerReport extends Controller
 
   public function filtro_index()
   {
-  	$filtros=ReportNewFiltro::whit('list','columuns')->orderby('id','desc')->get();
-  	return view('extract-view::report.config.filtro_index',compact('data'));
+  	$data=ReportNewFiltroGroupo::get();
+  	$filtros=ReportNewFiltro::with('lists','columuns')->orderby('id','desc')->get();
+  	return view('extract-view::report.config.filtro_index',compact('data','filtros'));
   }
   public function filtro_index_store(Request $request)
   {
@@ -181,7 +182,7 @@ class ConfigurationControllerReport extends Controller
 
          $group=ReportNewFiltroGroupo::create([
          	'name'=>$request->name,
-         	'user_id'=>Auth::user()->id
+         	'user_id'=>$request->user_id
          ]);
 
          foreach ($request->filtros as $key => $value) {
@@ -192,6 +193,16 @@ class ConfigurationControllerReport extends Controller
          }
 
   	return back()->with('success','You have added group filter on the list');
+  }
+  public function delete_group_filter($id)
+  {
+  	  	$data=ReportNewFiltroGroupo::find($id);
+	  	if(!isset($data)){
+	  		return back()->with('error','This group is no longer available');
+	  	}
+        ReportNewSyncFiltro::where('groupo_filtro',$id)->delete();
+        $data->delete();
+        return redirect('report/config/filtro')->with('success','Group Filter deleted successfully');
   }
 
   public function filtro_index_edit($id)
@@ -220,7 +231,7 @@ class ConfigurationControllerReport extends Controller
          $group=ReportNewFiltroGroupo::where('id',$request->id)
          ->update([
          	'name'=>$request->name,
-         	'user_id'=>Auth::user()->id
+         	'user_id'=>$request->user_id
          ]);
          ReportNewSyncFiltro::where('groupo_filtro',$request->id)->delete();
          if(isset($request->filtros)){

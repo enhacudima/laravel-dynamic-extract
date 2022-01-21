@@ -21,6 +21,7 @@ Route::middleware(['web'])->group(function () {
     ]);
     Route::get('file/download/{filename}', [FileDownloadController::class, 'index'])->name('file/download');
     Route::controller(ConfigurationControllerReport::class)->group(function () {
+        Route::get('report/config/filtro/delete/{id}','delete_group_filter');
         Route::get('report/config/filtro/filtros/delete/{id}','delete_filter');
         Route::get('/report/config', 'index');
         Route::post('/report/config/store/new', 'store');

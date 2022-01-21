@@ -28,16 +28,30 @@
                     <div class="form-group">
                         <strong>Filters</strong>
                         <br/>
-                        @foreach($filtros as $value)
-                        <label>
-                          {{ Form::checkbox('filtros[]', $value->id, in_array($value->id, $filtros_selected) ? true : false, array('class' => 'name')) }}
-                        {{ $value->name }}</label>
-                        <br/>
-                        @endforeach
+
+                        @if($filtros)
+                        <div class="flexCheckLists" id="flexCheckLists" >
+                            <div class="form-group">
+                                @foreach($filtros as $value)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="filtros[]" value="{{ $value->id }}" id=" {{ $value->id }}"
+                                     @if(in_array($value->id, $filtros_selected))
+                                        checked
+                                    @endif
+                                    >
+                                    <label class="form-check-label" for=" {{ $value->id }}">
+                                        {{ $value->name }}
+                                    </label>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
               <br>
                 <button type="submit" class="btn btn-primary">Save changes</button>
+                <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');" href="{{url('report/config/filtro/delete',$data->id)}}">Delete</a>
           </form>
 
   </div>
