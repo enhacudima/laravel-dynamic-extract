@@ -20,7 +20,7 @@ class CreateProcessedFilesTable extends Migration
             $table->string('path');
             $table->string('can');
             $table->longText('filterData');
-            $table->bigInteger('user_id');
+            $table->bigInteger('user_id')->unsigned();
             $table->integer('status')->default(1);
         });
     }

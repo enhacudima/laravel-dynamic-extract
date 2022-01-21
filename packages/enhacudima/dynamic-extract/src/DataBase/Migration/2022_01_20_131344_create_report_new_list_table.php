@@ -20,7 +20,7 @@ class CreateReportNewListTable extends Migration
             $table->bigInteger('report_new_filtro_id')->unsigned();
             $table->integer('status')->default(1);
 
-             $table->foreignId('user_id')->constrained('users');
+            $table->bigInteger('user_id')->unsigned();
             $table->foreign('report_new_filtro_id')->references('id')->on('report_new_filtro');
         });
     }

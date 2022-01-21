@@ -50,7 +50,7 @@
                   <option value="{{$table->id}}">{{$table->name}}</option>
                   @endforeach
                 </select><br>
-              <button type="submit" class="btn ">Save changes</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
           </form>
 
   </div>

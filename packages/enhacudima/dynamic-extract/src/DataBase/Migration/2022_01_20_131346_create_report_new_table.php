@@ -23,7 +23,7 @@ class CreateReportNewTable extends Migration
             $table->string('can');
             $table->integer('status')->default(1);
 
-            $table->foreignId('user_id')->constrained('users');
+            $table->bigInteger('user_id')->unsigned();
             $table->foreign('table_name')->references('id')->on('report_new_tables');
             $table->foreign('filtro')->references('id')->on('report_new_filtro_group');
         });

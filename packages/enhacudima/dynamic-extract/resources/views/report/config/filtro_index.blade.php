@@ -63,7 +63,7 @@
                 </td>
                 <td>{{$value->created_at}}</td>
                 <td>{{$value->updated_at->diffForHumans()}}</td>
-                <td><img src="{{asset('storage/uploads/avatars/'.$value->user->avatar)}}" class="img-circle" alt="User Image" width="25px" height="25px"> {{$value->user->name}} {{$value->user->lname}}</td>
+                <td>{{$value->user->name ?? ''}} </td>
                 </tr>
                 </tr>
 

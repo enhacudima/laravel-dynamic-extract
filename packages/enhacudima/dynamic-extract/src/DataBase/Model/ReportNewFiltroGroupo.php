@@ -16,8 +16,8 @@ class ReportNewFiltroGroupo extends Model
 
     public function sync_filtros()
     {
-        return $this->hasMany('App\ReportNewSyncFiltro','groupo_filtro','id');
-    } 
+        return $this->hasMany(ReportNewSyncFiltro::class,'groupo_filtro','id');
+    }
     public function user()
     {
         return $this->belongsTo('App\User','user_id','id');

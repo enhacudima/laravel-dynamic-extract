@@ -5,8 +5,6 @@
 @section('content_header')
       <a class="btn btn-social-icon btn-github"  href="{{ url('report/config/filtro') }}"><i class="fa  fa-arrow-left"></i></a>
       <a class="btn btn-social-icon btn-github"  data-bs-toggle="modal" data-bs-target="#exampleModal" ><i class="fa  fa-plus"></i></a>
-      <a class="btn btn-social-icon btn-github " href="{{ url('report/config/filtro/list') }}"><i class="fa  fa-list"></i></a>
-      <a class="btn btn-social-icon btn-github " href="{{ url('report/config/filtro/columuns') }}"><i class="fa  fa-database"></i></a>
 @stop
 
 @section('content')
@@ -60,20 +58,20 @@
                 <td>{{$value->type}}</td>
                 <td>
                     @foreach($value->columuns as $columun)
-                        <span class="badge bg-defult">{{$columun->name}}</span>
+                        <span class="badge bg-primary">{{$columun->name}}</span>
                     @endforeach
                 </td>
                 <td>
                     @foreach($value->lists as $lists)
-                        <span class="badge bg-defult">{{$lists->name}}</span>
+                        <span class="badge bg-primary">{{$lists->name}}</span>
                     @endforeach
                 </td>
                 <td>
-                      <a class="fa fa-pencil-square-o btn btn-success btn-xs" aria-hidden="true" href="{{url('report/config/filtro/filtros/edit',$value->id)}}" > Modify</a>
+                      <a class="btn btn-success btn-sm" aria-hidden="true" href="{{url('report/config/filtro/filtros/edit',$value->id)}}" ><i class="fas fa-edit"></i> Modify</a>
                 </td>
                 <td>{{$value->created_at}}</td>
                 <td>{{$value->updated_at->diffForHumans()}}</td>
-                <td><img src="{{asset('storage/uploads/avatars/'.$value->user->avatar)}}" class="img-circle" alt="User Image" width="25px" height="25px"> {{$value->user->name}} {{$value->user->lname}}</td>
+                <td>{{$value->user->name ?? ''}}</td>
                 </tr>
 
                 @endforeach
@@ -134,7 +132,6 @@
 
                 <div class="flexCheckColumuns" id="flexCheckColumuns" style="display: none;">
                     <div class="form-group">
-                        <strong>Columuns</strong>
                         <br/>
                         @if(config('dynamic-extract.columuns'))
                             @foreach(config('dynamic-extract.columuns') as $groups)
@@ -171,7 +168,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
     $('#type').on('change', function() {
-        console.log(this.value)
+        //console.log(this.value)
         if (this.value=="columuns"){
         $('#flexCheckLists').css('display', 'none');
         $('#flexCheckColumuns').css('display', 'block');

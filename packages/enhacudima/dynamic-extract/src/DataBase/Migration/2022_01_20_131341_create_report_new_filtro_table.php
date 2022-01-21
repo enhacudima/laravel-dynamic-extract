@@ -21,7 +21,7 @@ class CreateReportNewFiltroTable extends Migration
             $table->string('type');
             $table->integer('status')->default(1);
 
-             $table->foreignId('user_id')->constrained('users');
+            $table->bigInteger('user_id')->unsigned();
         });
     }
 

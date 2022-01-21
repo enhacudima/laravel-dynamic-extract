@@ -55,14 +55,14 @@
                 <td>{{$value->id}}</td>
                 <td>{{$value->name}}</td>
                 <td>
-                    <span class="badge bg-defult">{{$value->filtro->name}}</span>
+                    <span class="badge bg-primary">{{$value->filtro->name}}</span>
                 </td>
                 <td>
-                      <a class="fa fa-pencil-square-o btn btn-success btn-xs" aria-hidden="true" href="{{url('report/config/filtro/columuns/edit',$value->id)}}" > Modify</a>
+                      <a class="btn btn-success btn-sm" aria-hidden="true" href="{{url('report/config/filtro/columuns/edit',$value->id)}}" ><i class="fas fa-edit"></i> Modify</a>
                 </td>
                 <td>{{$value->created_at}}</td>
                 <td>{{$value->updated_at->diffForHumans()}}</td>
-                <td><img src="{{asset('storage/uploads/avatars/'.$value->user->avatar)}}" class="img-circle" alt="User Image" width="25px" height="25px"> {{$value->user->name}} {{$value->user->lname}}</td>
+                <td> {{$value->user->name ?? ''}} </td>
                 </tr>
 
                 @endforeach
@@ -86,7 +86,9 @@
             <div class="modal-body">
                 <input type="" name="user_id" value="{{Auth::user()->id ?? 0}}" hidden="">
 
+                <label for="exampleFormControlInput1" class="form-label">Name</label>
                 <input type="text" name="name" required autofocus="" class="form-control" placeholder="Name"><br>
+                <label for="exampleFormControlInput1" class="form-label">Filter</label>
                 <select required="" name="report_new_filtro_id" required autofocus="" class="form-control">
                   <option value="" disabled="" selected="">Select filter</option>
                   @foreach($filtros as $filtro)

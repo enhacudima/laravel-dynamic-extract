@@ -19,7 +19,7 @@ class CreateReportNewFiltroGroupTable extends Migration
             $table->string('name');
             $table->integer('status')->default(1);
 
-             $table->foreignId('user_id')->constrained('users');
+            $table->bigInteger('user_id')->unsigned();
         });
     }
 

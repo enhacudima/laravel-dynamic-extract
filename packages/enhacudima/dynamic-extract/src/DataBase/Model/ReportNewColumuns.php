@@ -20,7 +20,7 @@ class ReportNewColumuns extends Model
 
         public function filtro()
     {
-        return $this->belongsTo('App\ReportNewFiltro','report_new_filtro_id','id');
+        return $this->belongsTo(ReportNewFiltro::class,'report_new_filtro_id','id');
     }
 
 

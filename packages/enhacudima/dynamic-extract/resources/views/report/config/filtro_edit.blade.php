@@ -37,7 +37,7 @@
                     </div>
                 </div>
               <br>
-              <button type="submit" class="btn ">Save changes</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
           </form>
 
   </div>

@@ -16,7 +16,7 @@ class ReportNewSyncFiltro extends Model
 
     public function filtros()
     {
-        return $this->belongsTo('App\ReportNewFiltro','filtro','id');
+        return $this->belongsTo(ReportNewFiltro::class,'filtro','id');
     }
 
 }

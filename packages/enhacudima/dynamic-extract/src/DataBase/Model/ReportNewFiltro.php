@@ -15,14 +15,13 @@ class ReportNewFiltro extends Model
 
         public function lists()
     {
-        return $this->hasMany('App\ReportNewLists','report_new_filtro_id','id');
+        return $this->hasMany(ReportNewLists::class,'report_new_filtro_id','id');
     }
 
         public function columuns()
     {
-        return $this->hasMany('App\ReportNewColumuns','report_new_filtro_id','id');
+        return $this->hasMany(ReportNewColumuns::class,'report_new_filtro_id','id');
     }
-
         public function user()
     {
         return $this->belongsTo('App\User','user_id','id');

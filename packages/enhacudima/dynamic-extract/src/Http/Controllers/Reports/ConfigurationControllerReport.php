@@ -9,10 +9,10 @@ use Enhacudima\DynamicExtract\DataBase\Model\ReportNew;
 use Enhacudima\DynamicExtract\DataBase\Model\ReportNewFiltro;
 use Enhacudima\DynamicExtract\DataBase\Model\ReportNewTables;
 use Enhacudima\DynamicExtract\DataBase\Model\ReportNewFiltroGroupo;
-use DB;
-use Enhacudima\DynamicExtract\DataBase\Model\ReportNewLists;
-use Auth;
 use Enhacudima\DynamicExtract\DataBase\Model\ReportNewColumuns;
+use Enhacudima\DynamicExtract\DataBase\Model\ReportNewLists;
+use DB;
+use Auth;
 
 class ConfigurationControllerReport extends Controller
 {
@@ -168,9 +168,8 @@ class ConfigurationControllerReport extends Controller
 
   public function filtro_index()
   {
-  	$data=ReportNewFiltroGroupo::get();
-  	$filtros=ReportNewFiltro::get();
-  	return view('extract-view::report.config.filtro_index',compact('data','filtros'));
+  	$filtros=ReportNewFiltro::whit('list','columuns')->orderby('id','desc')->get();
+  	return view('extract-view::report.config.filtro_index',compact('data'));
   }
   public function filtro_index_store(Request $request)
   {
@@ -204,8 +203,8 @@ class ConfigurationControllerReport extends Controller
   	$filtros=ReportNewFiltro::get();
   	$filtros_selected=ReportNewSyncFiltro::where('groupo_filtro',$id)->pluck('filtro')->all();
   	return view('extract-view::report.config.filtro_edit',compact('data','filtros','filtros_selected'));
-
   }
+
   public function filtro_index_edit_store(Request $request)
   {
   	  	 $validatedData = $request->validate([
@@ -237,8 +236,7 @@ class ConfigurationControllerReport extends Controller
   }
   public function filtros_all()
   {
-  	$data=ReportNewFiltro::get();
-
+  	$data=ReportNewFiltro::with('columuns','user','lists')->get();
   	return view('extract-view::report.config.filtros_all',compact('data'));
   }
 
@@ -250,7 +248,29 @@ class ConfigurationControllerReport extends Controller
             'type'=>'required|string|max:255',
             'user_id'=>'required|integer',
          ]);
-  	  ReportNewFiltro::create($request->all());
+  	  $id=ReportNewFiltro::create($request->except(['list_columuns']));
+
+    if($request->list_columuns){
+
+
+        foreach ($request->list_columuns as $key => $list) {
+            $dataRequest=[
+                'report_new_filtro_id'=>$id->id,
+                'name'=>$list,
+                'user_id'=>$request->user_id
+            ];
+
+            switch ($request->type) {
+                case 'columuns':
+                        $this->filtros_columuns_store_f($dataRequest);
+                    break;
+                    case 'list':
+                        $this->filtros_list_store_f($dataRequest);
+                    break;
+
+            }
+        }
+    }
 
   	  return back()->with('success','You have added filter on the list');
   }
@@ -258,15 +278,25 @@ class ConfigurationControllerReport extends Controller
   public function filtros_all_edit($id)
   {
 
-  	$data=ReportNewFiltro::find($id);
+  	$data=ReportNewFiltro::with('lists','columuns')->find($id);
 	if(!isset($data)){
   		return back()->with('error','This group is no longer available');
   	}
-
   	return view('extract-view::report.config.filtros_all_edit',compact('data'));
-
   }
+  public function delete_filter($id)
+  {
+  	    $data=ReportNewFiltro::find($id);
+  		if(!isset($data)){
+	  		return back()->with('error','This filter is no longer available');
+	  	}
 
+        ReportNewColumuns::where('report_new_filtro_id',$id)->delete();
+        ReportNewLists::where('report_new_filtro_id',$id)->delete();
+        $data->delete();
+
+         return redirect('report/config/filtro/filtros')->with('success','Filter deleted successfully');
+  }
   public function filtros_all_edit_store(Request $request)
   {
   	  	 $validatedData = $request->validate([
@@ -277,12 +307,38 @@ class ConfigurationControllerReport extends Controller
          ]);
 
   	  ReportNewFiltro::where('id',$request->id)
-  	  ->update($request->except('_token'));
+  	  ->update($request->except('_token','list_columuns'));
+
+        ReportNewColumuns::where('report_new_filtro_id',$request->id)->delete();
+        ReportNewLists::where('report_new_filtro_id',$request->id)->delete();
+
+        if($request->list_columuns){
+
+
+            foreach ($request->list_columuns as $key => $list) {
+
+                $dataRequest=[
+                    'report_new_filtro_id'=>$request->id,
+                    'name'=>$list,
+                    'user_id'=>$request->user_id
+                ];
+
+                switch ($request->type) {
+                    case 'columuns':
+                            $this->filtros_columuns_store_f($dataRequest);
+                        break;
+                        case 'list':
+                            $this->filtros_list_store_f($dataRequest);
+                        break;
+
+                }
+            }
+        }
 
   	  return redirect('report/config/filtro/filtros')->with('success','You have edited filter on the list');
-
-
   }
+
+
   public function filtros_list()
   {
   	$data=ReportNewLists::get();
@@ -291,14 +347,32 @@ class ConfigurationControllerReport extends Controller
   }
   public function filtros_list_store(Request $request)
   {
-  	  	 $validatedData = $request->validate([
+         $request=[
+            'report_new_filtro_id'=> $request->report_new_filtro_id,
+            'name' => $request->name,
+            'user_id' => $request->user_id
+         ];
+         $this->filtros_list_store_f($request);
+  	return back()->with('success','You have added list to the list');
+  }
+  public function filtros_list_store_f($request)
+  {
+       $dataRequest=[
+                'report_new_filtro_id'=>$request['report_new_filtro_id'],
+                'name'=>$request['name'],
+                'user_id'=>$request['user_id']
+            ];
+            $myRequest = new Request();
+            $myRequest->setMethod('POST');
+            $myRequest->request->add($dataRequest);
+
+  	  	 $validator = $myRequest->validate([
             'name'=>'required|string|max:70',
             'report_new_filtro_id'=>'required|integer',
             'user_id'=>'required|integer',
          ]);
-         ReportNewLists::create($request->all());
 
-  	return back()->with('success','You have added list to the list');
+         ReportNewLists::create($myRequest->all());
   }
 
   public function filtros_list_edit($id)
@@ -337,14 +411,36 @@ class ConfigurationControllerReport extends Controller
   }
   public function filtros_columuns_store(Request $request)
   {
-  	  	 $validatedData = $request->validate([
+
+         $request=[
+            'report_new_filtro_id'=> $request->report_new_filtro_id,
+            'name' => $request->name,
+            'user_id' => $request->user_id
+         ];
+
+         $this->filtros_columuns_store_f($request);
+
+  	return back()->with('success','You have added list to the list');
+  }
+
+  public function filtros_columuns_store_f($request)
+  {
+
+       $dataRequest=[
+                'report_new_filtro_id'=>$request['report_new_filtro_id'],
+                'name'=>$request['name'],
+                'user_id'=>$request['user_id']
+            ];
+            $myRequest = new Request();
+            $myRequest->setMethod('POST');
+            $myRequest->request->add($dataRequest);
+
+  	  	 $validator = $myRequest->validate([
             'name'=>'required|string|max:70',
             'report_new_filtro_id'=>'required|integer',
             'user_id'=>'required|integer',
          ]);
-         ReportNewColumuns::create($request->all());
-
-  	return back()->with('success','You have added list to the list');
+         ReportNewColumuns::create($myRequest->all());
   }
 
   public function filtros_columuns_edit($id)
@@ -354,6 +450,7 @@ class ConfigurationControllerReport extends Controller
 	  		return back()->with('error','This group is no longer available');
 	  	}
   	$filtros=ReportNewFiltro::where('type','columuns')->get();
+
   	return view('extract-view::report.config.filtros_columuns_edit', compact('data','filtros'));
   }
 

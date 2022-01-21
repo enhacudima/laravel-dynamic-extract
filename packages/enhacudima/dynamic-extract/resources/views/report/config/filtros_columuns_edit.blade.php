@@ -22,7 +22,9 @@
                 <input type="" name="user_id" value="{{Auth::user()->id ?? 0}}" hidden="">
                 <input type="" name="id" value="{{$data->id}}" hidden="">
 
+                <label for="exampleFormControlInput1" class="form-label">Name</label>
                 <input type="text" name="name" required autofocus="" class="form-control" placeholder="Name" value="{{$data->name}}"><br>
+                <label for="exampleFormControlInput1" class="form-label">Filter</label>
                 <select required="" name="report_new_filtro_id" required autofocus="" class="form-control">
                   <option value="{{$data->report_new_filtro_id}}"selected="">{{$data->filtro->name}}</option>
                   @foreach($filtros as $filtro)
