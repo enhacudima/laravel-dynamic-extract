@@ -17,7 +17,7 @@ class CreateReportNewTablesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->string('table_name');
+            $table->string('table_name')->unique();
             $table->string('can');
             $table->integer('status')->default(1);
         });

@@ -102,7 +102,7 @@
                 <small>Table name for filter type "columuns"</small>
                 <br>
                 <br>
-                <select required="" name="type" required autofocus="" class="form-control">
+                <select required="" name="type" id="type" required autofocus="" class="form-control type">
                   <option value="" disabled="" selected="">Select type</option>
                   <option value="date">date</option>
                   <option value="pesquisa">search</option>
@@ -112,6 +112,46 @@
                   <option value="<=">less than "<="</option>
                   <option value=">=">greater than ">="</option>
                 </select>
+                <div class="flexCheckLists" id="flexCheckLists" style="display: none;">
+                    <div class="form-group">
+                        <br/>
+                        @if(config('dynamic-extract.lists'))
+                            @foreach(config('dynamic-extract.lists') as $groups)
+
+                            <strong>{{$groups['group_name']}}</strong>
+                               @foreach($groups['options'] as $value)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="list_columuns[]" value="{{ $value }}" id=" {{ $value }}" >
+                                    <label class="form-check-label" for=" {{ $value }}">
+                                        {{ $value }}
+                                    </label>
+                                </div>
+                               @endforeach
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+
+                <div class="flexCheckColumuns" id="flexCheckColumuns" style="display: none;">
+                    <div class="form-group">
+                        <strong>Columuns</strong>
+                        <br/>
+                        @if(config('dynamic-extract.columuns'))
+                            @foreach(config('dynamic-extract.columuns') as $groups)
+
+                            <strong>{{$groups['group_name']}}</strong>
+                               @foreach($groups['options'] as $value)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="list_columuns[]" value="{{ $value }}" id=" {{ $value }}">
+                                    <label class="form-check-label" for=" {{ $value }}">
+                                        {{ $value }}
+                                    </label>
+                                </div>
+                               @endforeach
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
               </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -130,6 +170,22 @@
 @section('js')
 <script type="text/javascript">
 $(document).ready(function() {
+    $('#type').on('change', function() {
+        console.log(this.value)
+        if (this.value=="columuns"){
+        $('#flexCheckLists').css('display', 'none');
+        $('#flexCheckColumuns').css('display', 'block');
+        }
+        else if(this.value=="list"){
+        $('#flexCheckLists').css('display', 'block');
+        $('#flexCheckColumuns').css('display', 'none');
+        }
+        else{
+        $('#flexCheckLists').css('display', 'none');
+        $('#flexCheckColumuns').css('display', 'none');
+        }
+    });
+
     $('#example').DataTable( {
         dom: 'Bfrtip',
         "order": [[ 0, "desc" ]],

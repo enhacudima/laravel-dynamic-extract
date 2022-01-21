@@ -39,11 +39,23 @@ class InstallCommand extends Command
      */
     public function handle()
     {
-        /*if ($this->confirm('Its always good to run Migration on first install, Do you wish to continue?')) {
-            Artisan::call('migrate --path=/packages/enhacudima/dynamic-extract/src/Database/Migration');
-        }*/
-        Artisan::call('vendor:publish --tag=public --force');
-        Artisan::call('vendor:publish --provider="Enhacudima\DynamicExtract\Providers\DynamicExtractServiceProvider" --tag="config"');
+        if ($this->confirm('Its always good to run Migration on first install, Do you wish to continue?')) {
+            $this->call('migrate', [
+                '--path' => '/packages/enhacudima/dynamic-extract/src/Database/Migration'
+            ]);
+        }
+        $this->call('vendor:publish', [
+            '--tag' => 'public','--force' => true
+        ]);
+        $this->call('vendor:publish', [
+            '--provider' => 'Enhacudima\DynamicExtract\Providers\DynamicExtractServiceProvider','--tag' => 'config'
+        ]);
+
+        $this->call('dynamic-extract:tables', [
+
+        ]);
+
+        $this->call('config:cache');
 
         $this->info('DynamicExtract installed successfully ');
         return Command::SUCCESS;

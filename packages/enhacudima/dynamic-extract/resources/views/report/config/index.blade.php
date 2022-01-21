@@ -101,7 +101,7 @@
                   <option value="" disabled="" selected="">Select permissions..</option>
                   @if(config('dynamic-extract.permissions'))
                     @foreach(config('dynamic-extract.permissions') as $permission)
-                        @if(config('dynamic-extract.auth') == true)
+                        @if(config('dynamic-extract.auth'))
                             @if(Auth::user()->can($permission))
                             <option value="{{$permission}}">{{$permission}}</option>
                             @else
@@ -125,7 +125,7 @@
                   <option value="" disabled="" selected="">Select table..</option>
                   @if($tables)
                   @foreach($tables as $table)
-                    @if(config('dynamic-extract.permissions'))
+                    @if(config('dynamic-extract.auth'))
                         @if(Auth::user()->can($table->can))
                         <option value="{{$table->id}}">{{$table->name}}</option>
                         @endif

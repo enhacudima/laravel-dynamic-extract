@@ -69,9 +69,25 @@ class InstallTablesList extends Command
                 'name' => $name,
                 'can' => $can,
             ]);
+            $this->info('DynamicExtract table deleted successfully');
         }
 
-        $this->info('DynamicExtract table successfully updated');
+
+        if ($this->confirm('Do you wish to delete table?')) {
+            $id = $this->ask('What is table code?');
+            $id_check = ReportNewTables::find($id);
+            if(!$id_check){
+                $this->error("Could not find any related tables");
+                $id = $this->ask('What is table code?');
+            }
+
+
+            ReportNewTables::where('id', $id)
+            ->delete();
+            $this->info('DynamicExtract table successfully updated');
+        }
+
+        $this->info('All done');
         return Command::SUCCESS;
     }
 }

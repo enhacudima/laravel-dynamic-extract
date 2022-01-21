@@ -44,14 +44,17 @@ class InstallTables extends Command
         $table_name = $this->ask('What is your table name?');
         $check_table = Schema::hasTable($table_name);
         if(!$check_table){
-            $this->error("Table not find");
+            $this->error("Could not find any related tables");
             $table_name = $this->ask('What is table name?');
         }
         $name = $this->ask('What is table screm name?');
         $can = $this->ask('What is permission?');
 
-        ReportNewTables::create([
-            'table_name' => $table_name,
+        ReportNewTables::updateorcreate(
+            [
+                'table_name' => $table_name,
+            ],
+            [
             'name' => $name,
             'can' => $can,
         ]);
