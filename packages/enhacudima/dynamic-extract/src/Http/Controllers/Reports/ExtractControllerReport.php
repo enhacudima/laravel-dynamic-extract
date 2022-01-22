@@ -60,6 +60,18 @@ class ExtractControllerReport extends Controller
         return view('extract-view::report.new', compact('data'));
     }
 
+
+
+  public function open_report_extract($id){
+    $report=ReportNew::where('id',$id)->where('status',1)->first();
+    if(!isset($report)){
+        return back()->with('error','This report is no longer available');
+    }
+
+    return view('extract-view::report.genarete',compact('report'))->with('success','Select your filters to continue');
+
+  }
+
     public function filtro(Request $request)
     {
         $end=date('Y-m-d');

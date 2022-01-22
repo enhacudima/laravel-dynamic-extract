@@ -15,6 +15,7 @@ Route::middleware(['web'])->group(function () {
         Route::get('/meusficheiros/deletefile/{filename}', 'deletefile');
         Route::get('/meusficheiros/all/deletefile', 'alldeletefile');
         Route::post('/report/filtro', 'filtro');
+        Route::get('report/config/open/{id}','open_report_extract');
     });
     Route::resources([
         'meusficheiros' => ExtractControllerReport::class,

@@ -11,7 +11,7 @@
 
  <div class="card card-solid card-default">
    <div class="card-header">
-              <center><h5 class="card-title"><strong><i class="fa fa-fw fa-folder-open"></i> Eedit Columun </strong></h5></center>
+              <center><h5 class="card-title"><strong><i class="fa fa-fw fa-folder-open"></i> Edit Columun </strong></h5></center>
 
     </div>
     <div class="panel-body">
@@ -32,7 +32,7 @@
                   @endforeach
                 </select>
               <br>
-              <button type="submit" class="btn ">Save changes</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
           </form>
 
   </div>

@@ -66,6 +66,7 @@ class ConfigurationControllerReport extends Controller
 
   	return back()->with('success','You changed report on the list');
   }
+
   public function delete_report($id)
   {
   	   $data=ReportNew::find($id);

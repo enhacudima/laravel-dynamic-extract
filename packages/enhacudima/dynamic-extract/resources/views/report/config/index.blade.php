@@ -62,10 +62,10 @@
                 </td>
                 <td>
                     @if(!$value->status)
-                    <a class="fa fa-refresh btn btn-danger btn-xs" aria-hidden="true" href="{{url('report/config/delete',$value->id)}}" > Active</a>
+                    <a class="btn btn-danger btn-sm" aria-hidden="true" href="{{url('report/config/delete',$value->id)}}" onclick="return confirm('Are you sure you want to active this item?');" > <i class="fas fa-lock-open"></i></a>
                     @else
                       <a class=" btn btn-success btn-sm" aria-hidden="true" href="{{url('report/config/edit',$value->id)}}" ><i class="fas fa-edit"></i> Modify</a>
-                      <a class="btn btn-danger btn-sm" aria-hidden="true" href="{{url('report/config/delete',$value->id)}}" ><i class="fas fa-trash"></i>  Desactive</a>
+                      <a class="btn btn-danger btn-sm" aria-hidden="true" href="{{url('report/config/delete',$value->id)}}" onclick="return confirm('Are you sure you want to deactivate this item?');" ><i class="fas fa-lock"></i></a>
                     @endif
                 </td>
                 <td>{{$value->created_at}}</td>

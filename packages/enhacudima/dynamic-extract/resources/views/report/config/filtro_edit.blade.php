@@ -35,7 +35,7 @@
                                 @foreach($filtros as $value)
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="filtros[]" value="{{ $value->id }}" id=" {{ $value->id }}"
-                                     @if(in_array($value->id, $filtros_selected))
+                                    @if(in_array($value->id, $filtros_selected))
                                         checked
                                     @endif
                                     >
