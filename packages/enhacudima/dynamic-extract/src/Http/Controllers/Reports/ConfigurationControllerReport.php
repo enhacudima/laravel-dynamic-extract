@@ -211,6 +211,11 @@ class ConfigurationControllerReport extends Controller
 	  	if(!isset($data)){
 	  		return back()->with('error','This group is no longer available');
 	  	}
+        $check = ReportNew::where('filtro',$id)->first();
+	  	if(isset($check)){
+	  		return back()->with('error','This group is on using on report '.$check->name);
+	  	}
+
         ReportNewSyncFiltro::where('groupo_filtro',$id)->delete();
         $data->delete();
         return redirect('report/config/filtro')->with('success','Group Filter deleted successfully');
@@ -311,6 +316,12 @@ class ConfigurationControllerReport extends Controller
   	    $data=ReportNewFiltro::find($id);
   		if(!isset($data)){
 	  		return back()->with('error','This filter is no longer available');
+	  	}
+
+        $check = ReportNewSyncFiltro::where('filtro',$id)->first();
+        if(isset($check)){
+            $group = ReportNewFiltroGroupo::where('id',$check->groupo_filtro)->first();
+	  		return back()->with('error','This filter is using on group filters '.$group->name);
 	  	}
 
         ReportNewColumuns::where('report_new_filtro_id',$id)->delete();
