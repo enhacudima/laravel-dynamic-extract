@@ -17,7 +17,7 @@ class CreateProcessedFilesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('filename');
-            $table->string('path');
+            $table->string('path')->nullable();
             $table->string('can');
             $table->longText('filterData');
             $table->bigInteger('user_id')->unsigned();

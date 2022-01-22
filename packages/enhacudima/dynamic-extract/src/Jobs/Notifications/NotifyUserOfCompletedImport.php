@@ -1,19 +1,19 @@
 <?php
-namespace App\Jobs;
+namespace Enhacudima\DynamicExtract\Jobs\Notifications;
 
 use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Notifications\ImportReady;
+use Enhacudima\DynamicExtract\Notifications\ImportReady;
 
 class NotifyUserOfCompletedImport implements ShouldQueue
 {
     use Queueable, SerializesModels;
-    
+
     public $user;
     public $filename;
-    
+
     public function __construct(User $user,$filename)
     {
         $this->user = $user;

@@ -6,13 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Auth;
 use Enhacudima\DynamicExtract\DataBase\Model\ProcessedFiles;
+use Enhacudima\DynamicExtract\Jobs\Notifications\NotifyUserOfCompletedExport;
+use Enhacudima\DynamicExtract\Exports\RelatorioExport;
+use Enhacudima\DynamicExtract\DataBase\Model\ReportNew;
 use DB;
 use Carbon\Carbon;
-use App\Exports\RelatorioExport;
 use Maatwebsite\Excel\Facades\Excel;
-use Enhacudima\DynamicExtract\Jobs\NotifyUserOfCompletedExport;
 use File;
-use Enhacudima\DynamicExtract\DataBase\Model\ReportNew;
 use Storage;
 
 
@@ -21,12 +21,19 @@ class ExtractControllerReport extends Controller
 
         public function __construct()
     {
+        if(config('dynamic-extract.auth')){
+            $this->middleware('auth');
+            $this->middleware('permission:'.config('dynamic-extract.middleware.extract'));
+            $this->middleware(config('dynamic-extract.middleware.extract'));
+        }
+        $this->prefix = config('dynamic-extract.prefix');
     }
 
   public function index()
   {
 
-      $data=ProcessedFiles::select('processed_files.*','users.name')->join('users','processed_files.user_id','users.id')->orderby('processed_files.created_at','desc')->get();
+      $data=ProcessedFiles::with('user')->orderby('processed_files.created_at','desc')
+        ->get();
 
       return view('extract-view::report.index',compact('data'));
   }
@@ -37,7 +44,7 @@ class ExtractControllerReport extends Controller
         Storage::delete($data->path.$data->filename);
         $data->delete();
 
-        return back();
+        return back()->with('success','Deleted successfully');
     }
 
     public function alldeletefile()
@@ -50,7 +57,7 @@ class ExtractControllerReport extends Controller
             }
 
             DB::delete('delete from processed_files');
-        return back();
+        return back()->with('success','All deleted successfully');
     }
 
 
@@ -93,29 +100,46 @@ class ExtractControllerReport extends Controller
           $type=$request->type;
           $filtro=$request->filtro;
         $new_str = str_replace(' ', '', $request->report_name);
-        $filename=$new_str.time().'.xlsx';
+        $filename=$new_str.'_'.time().'.xlsx';
         $filterData = $request->except(['_token','can','report_id']);
-        //dd($filterData);
+
         $data=[];
         $data['filename']=$filename;
         $data['user_id']=Auth::user()->id ?? 0;
         $data['can']=$request->can;
         $data['filterData']=$filterData;
-        ProcessedFiles::create($data);
-        //Excel::download(new RelatorioExport($start,$end,$type,$filtro,$request->all()), 'users.xlsx');
-        try{
+        $processed=ProcessedFiles::create($data);
 
-          (new RelatorioExport($start,$end,$type,$filtro,$request->all()))->queue($filename)->chain([
-              new NotifyUserOfCompletedExport(request()->user(),$filename),
-          ]);
+        if(!config('dynamic-extract.queue')){
+            try{
+                Excel::store(new RelatorioExport($start,$end,$type,$filtro,$request->all()), config('dynamic-extract.prefix').'/'.$filename);
+                ProcessedFiles::where('filename',$filename)
+                    ->update([
+                        'status' => 0,
+                        'path' => config('dynamic-extract.prefix').'/',
+                    ]);
+            }catch (Throwable $e) {
+                return back()->with('error','Error: '.$e->getMessage());
+            }
+        }else{
+            try{
 
-        }catch (Exception $e) {
-            return back()->with('error','Error: '.$e->getMessage());
+                if(config('dynamic-extract.auth')){
+                    (new RelatorioExport($start,$end,$type,$filtro,$request->all()))->queue($filename)->chain([
+                        new NotifyUserOfCompletedExport(request()->user(),$filename),
+                    ]);
+                }else{
+                    (new RelatorioExport($start,$end,$type,$filtro,$request->all()))->queue($filename);
+                }
+
+            }catch (Exception $e) {
+                return back()->with('error','Error: '.$e->getMessage());
+            }
         }
 
 
 
-        return Redirect(url('/report/index'))->withSuccess('Export starting..');
+        return Redirect(url($this->prefix.'/report/index'))->withSuccess('Export starting..');
 
     }
 

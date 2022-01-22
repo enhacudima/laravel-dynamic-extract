@@ -19,6 +19,11 @@ class ConfigurationControllerReport extends Controller
 
       public function __construct()
     {
+        if(config('dynamic-extract.auth')){
+            $this->middleware('auth');
+            $this->middleware('permission:'.config('dynamic-extract.middleware.config'));
+            $this->middleware(config('dynamic-extract.middleware.config'));
+        }
         $this->prefix = config('dynamic-extract.prefix');
     }
 

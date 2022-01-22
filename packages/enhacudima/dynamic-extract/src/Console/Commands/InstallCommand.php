@@ -50,12 +50,11 @@ class InstallCommand extends Command
         $this->call('vendor:publish', [
             '--provider' => 'Enhacudima\DynamicExtract\Providers\DynamicExtractServiceProvider','--tag' => 'config'
         ]);
-
+        $this->call('storage:link');
+        $this->call('config:cache');
         $this->call('dynamic-extract:tables', [
 
         ]);
-
-        $this->call('config:cache');
 
         $this->info('DynamicExtract installed successfully ');
         return Command::SUCCESS;

@@ -3,7 +3,7 @@
 @section('title','Dynamic Extract | Files')
 
 @section('content_header')
-     <a class="btn btn-social-icon btn-github" aria-hidden="true" href="{{url('meusficheiros/all/deletefile')}}" ><i class=" fas fa-trash-alt " style="color: red"></i> Delete All Files</a>
+     <a class="btn btn-social-icon btn-github" aria-hidden="true" href="{{url(config('dynamic-extract.prefix').'/meusficheiros/all/deletefile')}}" onclick="return confirm('Are you sure you want to delete all items?');"><i class=" fas fa-trash-alt " style="color: red"></i> Delete All Files</a>
 
 @stop
 
@@ -25,13 +25,13 @@
         <thead >
         <tr>
             <th scope="col">ID</th>
-            <th scope="col">Usuario</th>
-            <th scope="col"><center>Descrição</center></th>
-            <th scope="col">Details</th>
-            <th scope="col">Criado em</th>
-            <th scope="col">Tempo de execução</th>
-            <th scope="col">Ultima actualização</th>
-            <th scope="col">Estado</th>
+            <th scope="col"><center>User</center></th>
+            <th scope="col"><center>File</center></th>
+            <th scope="col"><center>Details</center></th>
+            <th scope="col"><center>Start</center></th>
+            <th scope="col"><center>Time</center></th>
+            <th scope="col"><center>Update</center></th>
+            <th scope="col"><center>Actions</center></th>
         </tr>
         </thead>
         <tbody>
@@ -39,7 +39,7 @@
                 @foreach($data as $value)
                     <tr>
                     <td>{{$value->id}}</td>
-                    <td><img src="{{asset('storage/uploads/avatars/'.$value->avatar)}}" class="img-circle" alt="User Image" width="25px" height="25px"> {{$value->name}} {{$value->lname}}</td>
+                    <td>{{$value->user->name ?? ''}} </td>
                     <td>{{$value->filename}}</td>
                     <td>
                         @if(isset($value->filterData))
@@ -61,10 +61,10 @@
                     <td>{{$value->updated_at->diffForHumans()}}</td>
                     <td>
                         @if($value->status)
-                        <a class="btn btn-default btn-xs" aria-hidden="true" href="{{url(config('dynamic-extract.prefix').'/meusficheiros/deletefile',$value->filename)}}" ><i class="fa fa-spinner fa-spin " style="color: red"></i> Abortar</a>
+                        <a class="btn btn-default btn-sm" aria-hidden="true" onclick="return confirm('Are you sure you want to delete this item?');" href="{{url(config('dynamic-extract.prefix').'/meusficheiros/deletefile',$value->filename)}}" ><i class="fa fa-spinner fa-spin " style="color: red"></i> <i class="far fa-stop-circle"></i></a>
                         @else
-                        <a class="btn btn-default btn-xs" aria-hidden="true" href="{{url(config('dynamic-extract.prefix').'/file/download',$value->filename)}}" ><i class="fas fa-download" style="color: green"></i> Baixar</a>
-                        <a class="btn btn-default btn-xs" aria-hidden="true" href="{{url(config('dynamic-extract.prefix').'/meusficheiros/deletefile',$value->filename)}}" ><i class="fas fa-trash-alt" style="color: red"></i> Eliminar</a>
+                        <a class="btn btn-default btn-sm" aria-hidden="true" href="{{url(config('dynamic-extract.prefix').'/file/download',$value->filename)}}" ><i class="fas fa-download" style="color: green"></i> </a>
+                        <a class="btn btn-default btn-sm" aria-hidden="true" onclick="return confirm('Are you sure you want to delete this item?');" href="{{url(config('dynamic-extract.prefix').'/meusficheiros/deletefile',$value->filename)}}" ><i class="fas fa-trash-alt" style="color: red"></i> </a>
                         @endif
                     </td>
                     </tr>
@@ -81,7 +81,7 @@
 <script type="text/javascript">
   setTimeout(function() {
     location.reload();
-  }, 30000);//30seg
+  }, {{config('dynamic-extract.interval')}});//30seg
 </script>
 
 <script type="text/javascript">

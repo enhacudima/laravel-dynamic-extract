@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Jobs;
+namespace Enhacudima\DynamicExtract\Jobs\Notifications;
 
-use App\Jobs\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use App\Notifications\SystemNotify;
+use Enhacudima\DynamicExtract\Notifications\SystemNotify;
 use Notification;
 use Auth;
 
