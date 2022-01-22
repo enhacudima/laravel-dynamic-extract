@@ -57,20 +57,20 @@
                 <td>{{$value->table->name}}</td>
                 <td>
                 @if(isset($value->filtro))
-                  <span class="badge bg-defult">{{$value->filtro_r->name}}</span>
+                  <span class="badge bg-primary">{{$value->filtro_r->name}}</span>
                 @endif
                 </td>
                 <td>
                     @if(!$value->status)
                     <a class="fa fa-refresh btn btn-danger btn-xs" aria-hidden="true" href="{{url('report/config/delete',$value->id)}}" > Active</a>
                     @else
-                      <a class="fa fa-pencil-square-o btn btn-success btn-xs" aria-hidden="true" href="{{url('report/config/edit',$value->id)}}" > Modify</a>
-                      <a class="fa fa-trash-o btn btn-danger btn-xs" aria-hidden="true" href="{{url('report/config/delete',$value->id)}}" > Desactive</a>
+                      <a class=" btn btn-success btn-sm" aria-hidden="true" href="{{url('report/config/edit',$value->id)}}" ><i class="fas fa-edit"></i> Modify</a>
+                      <a class="btn btn-danger btn-sm" aria-hidden="true" href="{{url('report/config/delete',$value->id)}}" ><i class="fas fa-trash"></i>  Desactive</a>
                     @endif
                 </td>
                 <td>{{$value->created_at}}</td>
                 <td>{{$value->updated_at->diffForHumans()}}</td>
-                <td><img src="{{asset('storage/uploads/avatars/'.$value->user->avatar)}}" class="img-circle" alt="User Image" width="25px" height="25px"> {{$value->user->name}} {{$value->user->lname}}</td>
+                <td> {{$value->user->name ?? ''}} </td>
                 </tr>
 
                 @endforeach

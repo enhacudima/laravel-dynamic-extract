@@ -66,6 +66,15 @@ class ConfigurationControllerReport extends Controller
 
   	return back()->with('success','You changed report on the list');
   }
+  public function delete_report($id)
+  {
+  	   $data=ReportNew::find($id);
+	  	if(!isset($data)){
+	  		return back()->with('error','This report is no longer available');
+	  	}
+        $data->delete();
+        return redirect('report/new')->with('success','Report deleted successfully');
+  }
   public function edit($id){
   	$data=ReportNew::find($id);
   	if(!isset($data)){
@@ -73,7 +82,8 @@ class ConfigurationControllerReport extends Controller
   	}
   	$filtros=ReportNewFiltroGroupo::get();
   	$tables=ReportNewTables::get();
-  	$permissions=DB::table('permissions')->orderBy('name','asc')->get();
+    $permissions = '';
+  	#$permissions=DB::table('permissions')->orderBy('name','asc')->get();
 
   	return view('extract-view::report.config.edit',compact('data','filtros','tables','permissions'));
 

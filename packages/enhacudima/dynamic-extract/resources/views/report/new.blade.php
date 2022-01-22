@@ -9,11 +9,11 @@
 @section('content')
     <div class="row">
     @foreach($data as $report)
-        @if(Auth::user()->can($report->can))
+        @if(config('dynamic-extract.auth') ? Auth::user()->can($report->can) : true)
             <div class="col-md-4 ">
                 <div class="card collapsed-card">
                     <div class="card-header">
-                    <h3 class="card-title"><img src="{{asset('storage/uploads/avatars/'.$report->user->avatar)}}" class="user-image img-circle elevation-2" alt="User Image" width="25px" height="25px"> {{$report->name}}</h3></h3>
+                    <h3 class="card-title"> {{$report->name}}</h3></h3>
 
                     <div class="card-tools">
                         @if(isset($report->filtro))
@@ -103,7 +103,7 @@
                         @endif
                         <hr />
                         <p>
-                            <i><code>{{$report->comments}}</code> by {{$report->user->name}} {{$report->user->lname}}</i>
+                            <i><code>{{$report->comments}}</code> by {{$report->user->name ?? ''}}</i>
                         </p>
                     <span class="input-group-btn">
                         <button type="submit" class="btn btn btn-default btn-flat" style="width: 100%"><i class="fa fa-download"></i> Extrat</button>

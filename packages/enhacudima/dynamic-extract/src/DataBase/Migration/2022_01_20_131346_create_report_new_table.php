@@ -19,13 +19,12 @@ class CreateReportNewTable extends Migration
             $table->string('name');
             $table->string('comments');
             $table->bigInteger('table_name')->unsigned();
-            $table->bigInteger('filtro')->unsigned();
+            $table->bigInteger('filtro')->nullable();
             $table->string('can');
             $table->integer('status')->default(1);
 
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('table_name')->references('id')->on('report_new_tables');
-            $table->foreign('filtro')->references('id')->on('report_new_filtro_group');
         });
     }
 

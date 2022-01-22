@@ -22,16 +22,28 @@
                 <input type="" name="user_id" value="{{Auth::user()->id ?? 0}}" hidden="">
                 <input type="" name="id" value="{{$data->id}}" hidden="">
 
+                <label for="exampleFormControlInput1" class="form-label">Name</label>
                 <input type="text" name="name" required autofocus="" class="form-control" placeholder="Name" value="{{$data->name}}"><br>
+                <label for="exampleFormControlInput1" class="form-label">Comments</label>
                 <input type="text" name="comments" required autofocus="" class="form-control" placeholder="Comments" value="{{$data->comments}}"><br>
+                <label for="exampleFormControlInput1" class="form-label">Permissions</label>
                 <select name="can" required="" autofocus="" class="form-control">
                   <option value="{{$data->can}}"  selected="">{{$data->can}}</option>
-                  @foreach($permissions as $permission)
-                    @if(Auth::user()->can($permission->name))
-                      <option value="{{$permission->name}}">{{$permission->name}}</option>
-                    @endif
-                  @endforeach
+                  @if(config('dynamic-extract.permissions'))
+                    @foreach(config('dynamic-extract.permissions') as $permission)
+                        @if(config('dynamic-extract.auth'))
+                            @if(Auth::user()->can($permission))
+                            <option value="{{$permission}}">{{$permission}}</option>
+                            @else
+                            <option value="{{$permission}}">{{$permission}}</option>
+                            @endif
+                        @else
+                            <option value="{{$permission}}">{{$permission}}</option>
+                        @endif
+                    @endforeach
+                  @endif
                 </select><br>
+                <label for="exampleFormControlInput1" class="form-label">Filter</label>
                 <select name="filtro" autofocus="" class="form-control">
                   @if(isset($data->filtro_r->id))
                     <option value="{{$data->filtro_r->id}}" selected="">{{$data->filtro_r->name}}</option>
@@ -44,6 +56,7 @@
                   <option value="" >No filter..</option>
                 </select>
                 <br>
+                <label for="exampleFormControlInput1" class="form-label">Table</label>
                 <select name="table_name" class="form-control">
                   <option value="{{$data->table->id}}"  selected="">{{$data->table->name}}</option>
                   @foreach($tables as $table)
@@ -51,6 +64,7 @@
                   @endforeach
                 </select><br>
                 <button type="submit" class="btn btn-primary">Save changes</button>
+                <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');" href="{{url('report/config//delete',$data->id)}}">Delete</a>
           </form>
 
   </div>
