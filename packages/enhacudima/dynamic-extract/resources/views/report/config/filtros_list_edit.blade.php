@@ -3,7 +3,7 @@
 @section('title','Dynamic Extract | Config Edit List')
 
 @section('content_header')
-    <h1><a class="btn btn-social-icon btn-github"  href="{{ url('report/config/filtro/list') }}"><i class="fa  fa-arrow-left"></i></a>
+    <h1><a class="btn btn-social-icon btn-github"  href="{{ url(config('dynamic-extract.prefix').'/report/config/filtro/list') }}"><i class="fa  fa-arrow-left"></i></a>
     </h1>
 @stop
 
@@ -17,7 +17,7 @@
     <div class="panel-body">
 
     <div class="card-body table-responsive no-padding">
-          <form method="post" id="list" action="{{url('report/config/filtro/list/edit/store')}}">
+          <form method="post" id="list" action="{{url(config('dynamic-extract.prefix').'/report/config/filtro/list/edit/store')}}">
           @csrf
                 <input type="" name="user_id" value="{{Auth::user()->id ?? 0}}" hidden="">
                 <input type="" name="id" value="{{$data->id}}" hidden="">

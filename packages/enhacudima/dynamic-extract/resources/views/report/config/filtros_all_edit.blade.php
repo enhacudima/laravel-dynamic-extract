@@ -3,7 +3,7 @@
 @section('title','Dynamic Extract | Config Edit Filter')
 
 @section('content_header')
-    <a class="btn btn-social-icon btn-github"  href="{{ url('report/config/filtro/filtros') }}"><i class="fa  fa-arrow-left"></i></a>
+    <a class="btn btn-social-icon btn-github"  href="{{ url(config('dynamic-extract.prefix').'/report/config/filtro/filtros') }}"><i class="fa  fa-arrow-left"></i></a>
 @stop
 
 @section('content')
@@ -15,7 +15,7 @@
     <div class="panel-body">
 
     <div class="card-body table-responsive no-padding">
-          <form method="post" id="list" action="{{url('report/config/filtro/filtros/edit/store')}}">
+          <form method="post" id="list" action="{{url(config('dynamic-extract.prefix').'/report/config/filtro/filtros/edit/store')}}">
           @csrf
                 <input type="" name="user_id" value="{{Auth::user()->id ?? 0}}" hidden="">
                 <input type="" name="id" value="{{$data->id}}" hidden="">
@@ -51,7 +51,7 @@
                             <label class="form-check-label" for=" {{ $value->id }}">
                                 {{ $value->name }}
                             </label>
-                            <a class="btn btn-light btn-sm" aria-hidden="true" href="{{url('report/config/filtro/list/edit',$value->id)}}" ><i class="fas fa-edit"></i> </a>
+                            <a class="btn btn-light btn-sm" aria-hidden="true" href="{{url(config('dynamic-extract.prefix').'/report/config/filtro/list/edit',$value->id)}}" ><i class="fas fa-edit"></i> </a>
                         </div>
                         @endforeach
                     </div>
@@ -70,7 +70,7 @@
                             <label class="form-check-label" for=" {{ $value->id }}">
                                 {{ $value->name }}
                             </label>
-                            <a class="btn btn-light btn-sm" aria-hidden="true" href="{{url('report/config/filtro/columuns/edit',$value->id)}}" ><i class="fas fa-edit"></i> </a>
+                            <a class="btn btn-light btn-sm" aria-hidden="true" href="{{url(config('dynamic-extract.prefix').'/report/config/filtro/columuns/edit',$value->id)}}" ><i class="fas fa-edit"></i> </a>
                         </div>
                         @endforeach
                     </div>
@@ -78,7 +78,7 @@
                 </div>
                 <br>
                 <button type="submit" class="btn btn-primary">Save changes</button>
-                <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');" href="{{url('report/config/filtro/filtros/delete',$data->id)}}">Delete</a>
+                <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');" href="{{url(config('dynamic-extract.prefix').'/report/config/filtro/filtros/delete',$data->id)}}">Delete</a>
           </form>
 
   </div>
@@ -92,7 +92,7 @@
             <h5 class="modal-title" id="exampleModalLabel">Create New Columun</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-          <form method="post" id="list" action="{{url('report/config/filtro/columuns/store')}}">
+          <form method="post" id="list" action="{{url(config('dynamic-extract.prefix').'/report/config/filtro/columuns/store')}}">
           @csrf
             <div class="modal-body">
                 <input type="" name="user_id" value="{{Auth::user()->id ?? 0}}" hidden="">
@@ -120,7 +120,7 @@
             <h5 class="modal-title" id="exampleModalLabel">Create New List</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-          <form method="post" id="list" action="{{url('report/config/filtro/list/store')}}">
+          <form method="post" id="list" action="{{url(config('dynamic-extract.prefix').'/report/config/filtro/list/store')}}">
           @csrf
             <div class="modal-body">
                 <input type="" name="user_id" value="{{Auth::user()->id ?? 0}}" hidden="">

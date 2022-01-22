@@ -17,7 +17,7 @@
     <div class="panel-body">
 
     <div class="card-body table-responsive no-padding">
-          <form method="post" id="list" action="{{url('report/config/store/edit')}}">
+          <form method="post" id="list" action="{{url(config('dynamic-extract.prefix').'/report/config/store/edit')}}">
           @csrf
                 <input type="" name="user_id" value="{{Auth::user()->id ?? 0}}" hidden="">
                 <input type="" name="id" value="{{$data->id}}" hidden="">
@@ -64,7 +64,7 @@
                   @endforeach
                 </select><br>
                 <button type="submit" class="btn btn-primary">Save changes</button>
-                <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');" href="{{url('report/config//delete',$data->id)}}">Delete</a>
+                <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');" href="{{url(config('dynamic-extract.prefix').'/report/config//delete',$data->id)}}">Delete</a>
           </form>
 
   </div>

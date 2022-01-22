@@ -16,7 +16,7 @@
                 {{$report->name}}
             </div>
             <div class="card-body text-dark">
-                    <form role="form" method="POST" action="{{ url('report/filtro')}}" enctype="multipart/form-data">
+                    <form role="form" method="POST" action="{{ url(config('dynamic-extract.prefix').'/report/filtro')}}" enctype="multipart/form-data">
                         @csrf
                         <input name="can" value="{{$report->can}}" type="hidden">
                         <input name="type" value="{{$report->table->table_name}}" type="hidden">
@@ -93,9 +93,9 @@
                     </form>
                 <div class="text-end">
                     @if(isset($report->filtro))
-                        <a href="{{url('report/config/filtro/edit',$report->filtro_r->id)}}" class="btn btn-tool"><i class="fas fa-filter"></i></a>
+                        <a href="{{url(config('dynamic-extract.prefix').'/report/config/filtro/edit',$report->filtro_r->id)}}" class="btn btn-tool"><i class="fas fa-filter"></i></a>
                     @endif
-                    <a href="{{url('report/config/edit',$report->id)}}" class="btn btn-tool"><i class="fas fa-pencil-alt"></i></a>
+                    <a href="{{url(config('dynamic-extract.prefix').'/report/config/edit',$report->id)}}" class="btn btn-tool"><i class="fas fa-pencil-alt"></i></a>
                 </div>
             </div>
             </div>

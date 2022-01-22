@@ -19,6 +19,7 @@ class ConfigurationControllerReport extends Controller
 
       public function __construct()
     {
+        $this->prefix = config('dynamic-extract.prefix');
     }
 
 
@@ -74,7 +75,7 @@ class ConfigurationControllerReport extends Controller
 	  		return back()->with('error','This report is no longer available');
 	  	}
         $data->delete();
-        return redirect('report/new')->with('success','Report deleted successfully');
+        return redirect($this->prefix.'report/new')->with('success','Report deleted successfully');
   }
   public function edit($id){
   	$data=ReportNew::find($id);
@@ -218,7 +219,7 @@ class ConfigurationControllerReport extends Controller
 
         ReportNewSyncFiltro::where('groupo_filtro',$id)->delete();
         $data->delete();
-        return redirect('report/config/filtro')->with('success','Group Filter deleted successfully');
+        return redirect($this->prefix.'report/config/filtro')->with('success','Group Filter deleted successfully');
   }
 
   public function filtro_index_edit($id)
@@ -328,7 +329,7 @@ class ConfigurationControllerReport extends Controller
         ReportNewLists::where('report_new_filtro_id',$id)->delete();
         $data->delete();
 
-         return redirect('report/config/filtro/filtros')->with('success','Filter deleted successfully');
+         return redirect($this->prefix.'report/config/filtro/filtros')->with('success','Filter deleted successfully');
   }
   public function filtros_all_edit_store(Request $request)
   {
@@ -368,7 +369,7 @@ class ConfigurationControllerReport extends Controller
             }
         }
 
-  	  return redirect('report/config/filtro/filtros')->with('success','You have edited filter on the list');
+  	  return redirect($this->prefix.'report/config/filtro/filtros')->with('success','You have edited filter on the list');
   }
 
 
@@ -432,7 +433,7 @@ class ConfigurationControllerReport extends Controller
   	  ReportNewLists::where('id',$request->id)
 		->update($request->except('_token'));
 
-  	return redirect('report/config/filtro/list')->with('success','You have edited the list');
+  	return redirect($this->prefix.'report/config/filtro/list')->with('success','You have edited the list');
   }
 
   public function filtros_columuns()
@@ -502,6 +503,6 @@ class ConfigurationControllerReport extends Controller
   	  ReportNewColumuns::where('id',$request->id)
   	  ->update($request->except('_token'));
 
-  	return redirect('report/config/filtro/columuns')->with('success','You have edited the list');
+  	return redirect($this->prefix.'report/config/filtro/columuns')->with('success','You have edited the list');
   }
 }

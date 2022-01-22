@@ -3,7 +3,7 @@
 @section('title','Dynamic Extract | Config Edit Group ')
 
 @section('content_header')
-    <h1><a class="btn btn-social-icon btn-github"  href="{{ url('report/config/filtro') }}"><i class="fa  fa-arrow-left"></i></a>
+    <h1><a class="btn btn-social-icon btn-github"  href="{{ url(config('dynamic-extract.prefix').'/report/config/filtro') }}"><i class="fa  fa-arrow-left"></i></a>
     </h1>
 @stop
 
@@ -17,7 +17,7 @@
     <div class="card-body">
 
     <div class="card-body table-responsive no-padding">
-          <form method="post" id="list" action="{{url('report/config/filtro/edit/store')}}">
+          <form method="post" id="list" action="{{url(config('dynamic-extract.prefix').'/report/config/filtro/edit/store')}}">
           @csrf
                 <input type="" name="user_id" value="{{Auth::user()->id ?? 0}}" hidden="">
                 <input type="" name="id" value="{{$data->id}}" hidden="">
@@ -51,11 +51,12 @@
                 </div>
               <br>
                 <button type="submit" class="btn btn-primary">Save changes</button>
-                <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');" href="{{url('report/config/filtro/delete',$data->id)}}">Delete</a>
+                <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');" href="{{url(config('dynamic-extract.prefix').'/report/config/filtro/delete',$data->id)}}">Delete</a>
           </form>
 
   </div>
 </div>
  </div>
+
 
 @stop

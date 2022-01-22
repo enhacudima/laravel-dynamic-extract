@@ -3,9 +3,9 @@
 @section('title','Dynamic Extract | Config Report')
 
 @section('content_header')
-      <a class="btn btn-social-icon btn-github"  href="{{ url('report/new') }}"><i class="fa  fa-arrow-left"></i></a>
+      <a class="btn btn-social-icon btn-github"  href="{{ url(config('dynamic-extract.prefix').'/report/new') }}"><i class="fa  fa-arrow-left"></i></a>
       <a class="btn btn-social-icon btn-github"  data-bs-toggle="modal" data-bs-target="#exampleModal" ><i class="fa  fa-plus"></i></a>
-      <a class="btn btn-social-icon btn-github " href="{{ url('report/config/filtro') }}"><i class="fa  fa-cog"></i></a>
+      <a class="btn btn-social-icon btn-github " href="{{ url(config('dynamic-extract.prefix').'/report/config/filtro') }}"><i class="fa  fa-cog"></i></a>
 
 @stop
 
@@ -13,13 +13,13 @@
 <div class="row">
 <div class="col-md-3">
     <div class="list-group">
-    <a href="{{url('report/config')}}" class="list-group-item list-group-item-action active" aria-current="true">
+    <a href="{{url(config('dynamic-extract.prefix').'/report/config')}}" class="list-group-item list-group-item-action active" aria-current="true">
         New Report
     </a>
-    <a href="{{url('report/config/filtro')}}" class="list-group-item list-group-item-action">Group Filter</a>
-    <a href="{{url('report/config/filtro/filtros')}}" class="list-group-item list-group-item-action">Filter</a>
-    <a href="{{url('report/config/filtro/list')}}" class="list-group-item list-group-item-action">Filter List</a>
-    <a href="{{url('report/config/filtro/columuns')}}" class="list-group-item list-group-item-action">Filter Columuns</a>
+    <a href="{{url(config('dynamic-extract.prefix').'/report/config/filtro')}}" class="list-group-item list-group-item-action">Group Filter</a>
+    <a href="{{url(config('dynamic-extract.prefix').'/report/config/filtro/filtros')}}" class="list-group-item list-group-item-action">Filter</a>
+    <a href="{{url(config('dynamic-extract.prefix').'/report/config/filtro/list')}}" class="list-group-item list-group-item-action">Filter List</a>
+    <a href="{{url(config('dynamic-extract.prefix').'/report/config/filtro/columuns')}}" class="list-group-item list-group-item-action">Filter Columuns</a>
     </div>
 </div>
  <div class="card col-md-9">
@@ -62,10 +62,10 @@
                 </td>
                 <td>
                     @if(!$value->status)
-                    <a class="btn btn-danger btn-sm" aria-hidden="true" href="{{url('report/config/delete',$value->id)}}" onclick="return confirm('Are you sure you want to active this item?');" > <i class="fas fa-lock-open"></i></a>
+                    <a class="btn btn-danger btn-sm" aria-hidden="true" href="{{url(config('dynamic-extract.prefix').'/report/config/delete',$value->id)}}" onclick="return confirm('Are you sure you want to active this item?');" > <i class="fas fa-lock-open"></i></a>
                     @else
-                      <a class=" btn btn-success btn-sm" aria-hidden="true" href="{{url('report/config/edit',$value->id)}}" ><i class="fas fa-edit"></i> Modify</a>
-                      <a class="btn btn-danger btn-sm" aria-hidden="true" href="{{url('report/config/delete',$value->id)}}" onclick="return confirm('Are you sure you want to deactivate this item?');" ><i class="fas fa-lock"></i></a>
+                      <a class=" btn btn-success btn-sm" aria-hidden="true" href="{{url(config('dynamic-extract.prefix').'/report/config/edit',$value->id)}}" ><i class="fas fa-edit"></i> Modify</a>
+                      <a class="btn btn-danger btn-sm" aria-hidden="true" href="{{url(config('dynamic-extract.prefix').'/report/config/delete',$value->id)}}" onclick="return confirm('Are you sure you want to deactivate this item?');" ><i class="fas fa-lock"></i></a>
                     @endif
                 </td>
                 <td>{{$value->created_at}}</td>
@@ -90,7 +90,7 @@
             <h5 class="modal-title" id="exampleModalLabel">Create New Report</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-          <form method="post" id="list" action="{{url('report/config/store/new')}}">
+          <form method="post" id="list" action="{{url(config('dynamic-extract.prefix').'/report/config/store/new')}}">
           @csrf
             <div class="modal-body">
                 <input type="" name="user_id" value="{{Auth::user()->id ?? 0}}" hidden="">

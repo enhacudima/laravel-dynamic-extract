@@ -1,7 +1,10 @@
 <?php
 
 return [
+  #when you set true it require permissions can
   'auth' => false,
+  #prefix your route name
+  'prefix' => 'dynamic-extract',
   #set your permissions based on you table permissions
   'permissions'=>[
     'report-1',
@@ -41,5 +44,5 @@ return [
                         'created_at',
                         ]
             ]
-  ]
+    ]
 ];

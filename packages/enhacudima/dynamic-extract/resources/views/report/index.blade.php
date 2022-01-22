@@ -61,10 +61,10 @@
                     <td>{{$value->updated_at->diffForHumans()}}</td>
                     <td>
                         @if($value->status)
-                        <a class="btn btn-default btn-xs" aria-hidden="true" href="{{url('meusficheiros/deletefile',$value->filename)}}" ><i class="fa fa-spinner fa-spin " style="color: red"></i> Abortar</a>
+                        <a class="btn btn-default btn-xs" aria-hidden="true" href="{{url(config('dynamic-extract.prefix').'/meusficheiros/deletefile',$value->filename)}}" ><i class="fa fa-spinner fa-spin " style="color: red"></i> Abortar</a>
                         @else
-                        <a class="btn btn-default btn-xs" aria-hidden="true" href="{{url('file/download',$value->filename)}}" ><i class="fas fa-download" style="color: green"></i> Baixar</a>
-                        <a class="btn btn-default btn-xs" aria-hidden="true" href="{{url('meusficheiros/deletefile',$value->filename)}}" ><i class="fas fa-trash-alt" style="color: red"></i> Eliminar</a>
+                        <a class="btn btn-default btn-xs" aria-hidden="true" href="{{url(config('dynamic-extract.prefix').'/file/download',$value->filename)}}" ><i class="fas fa-download" style="color: green"></i> Baixar</a>
+                        <a class="btn btn-default btn-xs" aria-hidden="true" href="{{url(config('dynamic-extract.prefix').'/meusficheiros/deletefile',$value->filename)}}" ><i class="fas fa-trash-alt" style="color: red"></i> Eliminar</a>
                         @endif
                     </td>
                     </tr>

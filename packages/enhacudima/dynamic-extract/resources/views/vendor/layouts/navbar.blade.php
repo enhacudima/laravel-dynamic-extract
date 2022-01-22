@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{{url('report/new')}}">
+    <a class="navbar-brand" href="{{url(config('dynamic-extract.prefix').'/report/new')}}">
         <img src="{{asset('enhacudima/dynamic-extract/icons/database.png')}}" alt="" width="30" height="24" class="d-inline-block align-text-top">
         Dynamic Extract
     </a>
@@ -10,13 +10,13 @@
     <div class="collapse navbar-collapse " id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="{{url('report/index')}}"><i class="far fa-file-excel"></i> Files</a>
+          <a class="nav-link" aria-current="page" href="{{url(config('dynamic-extract.prefix').'/report/index')}}"><i class="far fa-file-excel"></i> Files</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{url('report/new')}}"><i class="fas fa-database"></i> Generate</a>
+          <a class="nav-link" href="{{url(config('dynamic-extract.prefix').'/report/new')}}"><i class="fas fa-database"></i> Generate</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{url('report/config')}}"><i class="fa  fa-cog"></i> Configuration</a>
+          <a class="nav-link" href="{{url(config('dynamic-extract.prefix').'/report/config')}}"><i class="fa  fa-cog"></i> Configuration</a>
         </li>
       </ul>
     </div>

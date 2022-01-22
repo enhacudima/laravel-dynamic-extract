@@ -3,9 +3,9 @@
 @section('title','Dynamic Extract | Config Group Filter')
 
 @section('content_header')
-      <a class="btn btn-social-icon btn-github"  href="{{ url('report/config') }}"><i class="fa  fa-arrow-left"></i></a>
+      <a class="btn btn-social-icon btn-github"  href="{{ url(config('dynamic-extract.prefix').'/report/config') }}"><i class="fa  fa-arrow-left"></i></a>
       <a class="btn btn-social-icon btn-github"   data-bs-toggle="modal" data-bs-target="#exampleModal" ><i class="fa  fa-plus"></i></a>
-      <a class="btn btn-social-icon btn-github " href="{{ url('report/config/filtro/filtros') }}"><i class="fa  fa-cog"></i></a>
+      <a class="btn btn-social-icon btn-github " href="{{ url(config('dynamic-extract.prefix').'/report/config/filtro/filtros') }}"><i class="fa  fa-cog"></i></a>
 @stop
 
 @section('content')
@@ -13,13 +13,13 @@
 <div class="row">
 <div class="col-md-3">
     <div class="list-group">
-    <a href="{{url('report/config')}}" class="list-group-item list-group-item-action " aria-current="true">
+    <a href="{{url(config('dynamic-extract.prefix').'/report/config')}}" class="list-group-item list-group-item-action " aria-current="true">
         New Report
     </a>
-    <a href="{{url('report/config/filtro')}}" class="list-group-item list-group-item-action active">Group Filter</a>
-    <a href="{{url('report/config/filtro/filtros')}}" class="list-group-item list-group-item-action">Filter</a>
-    <a href="{{url('report/config/filtro/list')}}" class="list-group-item list-group-item-action">Filter List</a>
-    <a href="{{url('report/config/filtro/columuns')}}" class="list-group-item list-group-item-action">Filter Columuns</a>
+    <a href="{{url(config('dynamic-extract.prefix').'/report/config/filtro')}}" class="list-group-item list-group-item-action active">Group Filter</a>
+    <a href="{{url(config('dynamic-extract.prefix').'/report/config/filtro/filtros')}}" class="list-group-item list-group-item-action">Filter</a>
+    <a href="{{url(config('dynamic-extract.prefix').'/report/config/filtro/list')}}" class="list-group-item list-group-item-action">Filter List</a>
+    <a href="{{url(config('dynamic-extract.prefix').'/report/config/filtro/columuns')}}" class="list-group-item list-group-item-action">Filter Columuns</a>
     </div>
 </div>
  <div class="col-md-9">
@@ -59,7 +59,7 @@
                     @endforeach
                 </td>
                 <td>
-                  <a class="btn btn-success btn-sm" aria-hidden="true" href="{{url('report/config/filtro/edit',$value->id)}}" ><i class="fas fa-edit"></i> Modify</a>
+                  <a class="btn btn-success btn-sm" aria-hidden="true" href="{{url(config('dynamic-extract.prefix').'/report/config/filtro/edit',$value->id)}}" ><i class="fas fa-edit"></i> Modify</a>
                 </td>
                 <td>{{$value->created_at}}</td>
                 <td>{{$value->updated_at->diffForHumans()}}</td>
@@ -84,7 +84,7 @@
             <h5 class="modal-title" id="exampleModalLabel">Create New Group Filter</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-          <form method="post" id="list" action="{{url('report/config/filtro/store')}}">
+          <form method="post" id="list" action="{{url(config('dynamic-extract.prefix').'/report/config/filtro/store')}}">
           @csrf
             <div class="modal-body">
                 <input type="" name="user_id" value="{{Auth::user()->id ?? 0 }}" hidden="">

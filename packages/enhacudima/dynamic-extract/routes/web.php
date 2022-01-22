@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::middleware(['web'])->group(function () {
+Route::middleware(['web'])->prefix(config('dynamic-extract.prefix'))->group(function () {
     Route::controller(ExtractControllerReport::class)->group(function () {
         Route::get('/report/index', 'index');
         Route::get('/report/new', 'new');
