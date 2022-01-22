@@ -39,8 +39,11 @@
                   <option value=">=">greater than ">="</option>
                 </select>
                 <br>
-                @if($data->lists)
-                <div class="flexCheckLists" id="flexCheckLists" >
+                <div class="flexCheckLists" id="flexCheckLists"
+                @if(!count($data->lists) > 0)
+                style="display: none;"
+                @endif
+                >
                     <div class="form-group">
                         @foreach($data->lists as $value)
                         <div class="form-check">
@@ -52,10 +55,14 @@
                         </div>
                         @endforeach
                     </div>
+                    <a class="btn btn-primary btn-sm"  data-bs-toggle="modal" data-bs-target="#exampleModal" ><i class="fa  fa-plus"></i> Option List</a>
                 </div>
+
+                <div class="flexCheckColumuns" id="flexCheckColumuns"
+                @if(!count($data->columuns) > 0)
+                style="display: none;"
                 @endif
-                @if($data->columuns)
-                <div class="flexCheckColumuns" id="flexCheckColumuns" >
+                >
                     <div class="form-group">
                         @foreach($data->columuns as $value)
                         <div class="form-check">
@@ -67,8 +74,8 @@
                         </div>
                         @endforeach
                     </div>
+                    <a class="btn btn-primary btn-sm"  data-bs-toggle="modal" data-bs-target="#exampleModalCol" ><i class="fa  fa-plus"></i> Columun</a>
                 </div>
-                @endif
                 <br>
                 <button type="submit" class="btn btn-primary">Save changes</button>
                 <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');" href="{{url('report/config/filtro/filtros/delete',$data->id)}}">Delete</a>
@@ -77,11 +84,67 @@
   </div>
 </div>
 </div>
+<!-- Modal columun -->
+  <div class="modal fade" id="exampleModalCol" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Create New Columun</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+          <form method="post" id="list" action="{{url('report/config/filtro/columuns/store')}}">
+          @csrf
+            <div class="modal-body">
+                <input type="" name="user_id" value="{{Auth::user()->id ?? 0}}" hidden="">
 
+                <label for="exampleFormControlInput1" class="form-label">Name</label>
+                <input type="text" name="name" required autofocus="" class="form-control" placeholder="Name"><br>
+                <input type="" name="report_new_filtro_id" value="{{$data->id}}" hidden="">
+              </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </form>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+<!-- Modal list -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Create New List</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+          <form method="post" id="list" action="{{url('report/config/filtro/list/store')}}">
+          @csrf
+            <div class="modal-body">
+                <input type="" name="user_id" value="{{Auth::user()->id ?? 0}}" hidden="">
+
+                <label for="exampleFormControlInput1" class="form-label">Name</label>
+                <input type="text" name="name" required autofocus="" class="form-control" placeholder="Name"><br>
+                <input type="" name="report_new_filtro_id" value="{{$data->id}}" hidden="">
+              </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </form>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
 @stop
 @section('js')
 <script type="text/javascript">
 $(document).ready(function() {
+
     $('#type').on('change', function() {
         //console.log(this.value)
         if (this.value=="columuns"){
