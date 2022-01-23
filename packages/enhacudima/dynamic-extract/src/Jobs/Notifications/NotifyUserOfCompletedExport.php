@@ -24,14 +24,6 @@ class NotifyUserOfCompletedExport implements ShouldQueue
 
     public function handle()
     {
-
-        $data=ProcessedFiles::where('filename',$this->filename)->first();
-        $data->status = 0;
-        $data->path = config('dynamic-extract.prefix').'/';
-        $data->save();
-        Storage::move($this->filename, config('dynamic-extract.prefix').'/'.$this->filename);
-
-
         $this->user->notify(new ExportReady($this->filename));
     }
 }

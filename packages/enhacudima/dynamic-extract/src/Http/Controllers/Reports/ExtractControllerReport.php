@@ -143,8 +143,10 @@ class ExtractControllerReport extends Controller
         $filename=$new_str.'_'.time().'.xlsx';
         $filterData = $request->except(['_token','can','report_id']);
 
+        $path = config('dynamic-extract.prefix').'/'.$filename;
         $data=[];
         $data['filename']=$filename;
+        $data['path']=config('dynamic-extract.prefix').'/';
         $data['user_id']=Auth::user()->id ?? 0;
         $data['can']=$request->can;
         $data['filterData']=$filterData;
@@ -152,12 +154,7 @@ class ExtractControllerReport extends Controller
 
         if(!config('dynamic-extract.queue')){
             try{
-                Excel::store(new RelatorioExport($start,$end,$type,$filtro,$request->all()), config('dynamic-extract.prefix').'/'.$filename);
-                ProcessedFiles::where('filename',$filename)
-                    ->update([
-                        'status' => 0,
-                        'path' => config('dynamic-extract.prefix').'/',
-                    ]);
+                Excel::store(new RelatorioExport($filename,$start,$end,$type,$filtro,$request->all()), $path);
             }catch (Throwable $e) {
                 return back()->with('error','Error: '.$e->getMessage());
             }
@@ -165,11 +162,11 @@ class ExtractControllerReport extends Controller
             try{
 
                 if(config('dynamic-extract.auth')){
-                    (new RelatorioExport($start,$end,$type,$filtro,$request->all()))->queue($filename)->chain([
+                    (new RelatorioExport($filename,$start,$end,$type,$filtro,$request->all()))->queue($path)->chain([
                         new NotifyUserOfCompletedExport(request()->user(),$filename),
                     ]);
                 }else{
-                    (new RelatorioExport($start,$end,$type,$filtro,$request->all()))->queue($filename);
+                    (new RelatorioExport($filename,$start,$end,$type,$filtro,$request->all()))->queue($path);
                 }
 
             }catch (Exception $e) {
