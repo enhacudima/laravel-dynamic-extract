@@ -5,6 +5,7 @@ use Illuminate\Support\ServiceProvider;
 use Enhacudima\DynamicExtract\Console\Commands\InstallCommand;
 use Enhacudima\DynamicExtract\Console\Commands\InstallTables;
 use Enhacudima\DynamicExtract\Console\Commands\InstallTablesList;
+use Enhacudima\DynamicExtract\Console\Commands\DeleteExportedFiles;
 class DynamicExtractServiceProvider extends ServiceProvider
 {
     /**
@@ -30,12 +31,20 @@ class DynamicExtractServiceProvider extends ServiceProvider
             ], 'config');
 
         }
+        // Schedule the command if we are using the application via the CLI
+        if ($this->app->runningInConsole()) {
+            $this->app->booted(function () {
+                $schedule = $this->app->make(Schedule::class);
+                $schedule->command('dynamic-extract:delete-exported')->weekly();
+            });
+        }
 
         if ($this->app->runningInConsole()) {
             $this->commands([
                 InstallCommand::class,
                 InstallTables::class,
                 InstallTablesList::class,
+                DeleteExportedFiles::class,
             ]);
         }
     }
