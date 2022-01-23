@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-default navbar-fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top ">
   <div class="container-fluid">
     <a class="navbar-brand" href="{{url(config('dynamic-extract.prefix').'/report/new')}}">
         <img src="{{asset('enhacudima/dynamic-extract/icons/database.png')}}" alt="" width="30" height="24" class="d-inline-block align-text-top">

@@ -21,22 +21,22 @@
 
         <thead >
         <tr>
-            <th scope="col">ID</th>
-            <th scope="col"><center>Name</center></th>
-            <th scope="col">Columun/Table</th>
-            <th scope="col">Type</th>
-            <th scope="col"><center><i class="fa  fa-database"></i> Columuns</center></th>
-            <th scope="col"><center><i class="fa  fa-bars"></i> lists</center></th>
-            <th scope="col">Actions</th>
-            <th scope="col">Create</th>
-            <th scope="col">Time</th>
-            <th scope="col">User</th>
-
+            @if(isset($heading))
+            @foreach($heading as $col)
+            <th scope="col"><center> {{$col}}</center></th>
+            @endforeach
+            @endif
         </tr>
         </thead>
         <tbody>
             @if(isset($data))
-
+            @foreach($data as $key => $data_cols)
+                <tr>
+                    @foreach($data_cols as $key => $data_col)
+                    <td>{{$data_col}}</td>
+                    @endforeach
+                </tr>
+            @endforeach
             @endif
         </tbody>
     </table>

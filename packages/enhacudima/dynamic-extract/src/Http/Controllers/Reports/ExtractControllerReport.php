@@ -114,9 +114,9 @@ class ExtractControllerReport extends Controller
         $eq=$q->query();
         $heading = $eq['heading'];
         $data = $eq['data'];
-        $data->take(500);
-        #dd($heading);
-        return view('extract-view::report.tableRows',compact('heading','data'))->with('info','Max 500 rows');
+        $data=$data->take(500)->get();
+        #dd($data);
+        return view('extract-view::report.tableRows',compact('heading','data'))->with('warning','Max 500 rows');
 
     }
     public function filtro(Request $request)

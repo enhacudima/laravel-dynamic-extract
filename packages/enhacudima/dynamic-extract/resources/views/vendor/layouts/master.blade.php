@@ -15,13 +15,16 @@
     <title>@yield('title')</title>
   </head>
   <body>
-    @include('extract-view::vendor.layouts.navbar')
-    @yield('content_header')
-    <div class="container">
-        <div class="p-3 my-3">
+      <div class="container">
+        @include('extract-view::vendor.layouts.navbar')
+        <div class=" py-5 ">
+            <div class=" py-3 ">
+            @yield('content_header')
+            </div>
             @yield('content')
         </div>
         @include('extract-view::vendor.layouts.footer')
+
     </div>
 
     <!-- DataTable -->
