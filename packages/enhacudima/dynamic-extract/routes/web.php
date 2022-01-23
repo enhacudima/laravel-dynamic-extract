@@ -15,7 +15,8 @@ Route::middleware(['web'])->prefix(config('dynamic-extract.prefix'))->group(func
         Route::get('/meusficheiros/deletefile/{filename}', 'deletefile');
         Route::get('/meusficheiros/all/deletefile', 'alldeletefile');
         Route::post('/report/filtro', 'filtro');
-        Route::get('report/config/open/{id}','open_report_extract');
+        Route::post('/report/filtro/table','view_filtro');
+        Route::get('report/config/open/{id}/{type}','open_report_extract');
     });
     Route::resources([
         'meusficheiros' => ExtractControllerReport::class,

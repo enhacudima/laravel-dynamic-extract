@@ -16,7 +16,7 @@
                 {{$report->name}}
             </div>
             <div class="card-body text-dark">
-                    <form role="form" method="POST" action="{{ url(config('dynamic-extract.prefix').'/report/filtro')}}" enctype="multipart/form-data">
+                    <form role="form" method="POST" action="{{ url(config('dynamic-extract.prefix').$process_url)}}" enctype="multipart/form-data">
                         @csrf
                         <input name="can" value="{{$report->can}}" type="hidden">
                         <input name="type" value="{{$report->table->table_name}}" type="hidden">
@@ -88,7 +88,7 @@
                         @endif
                         <hr/>
                     <span class="input-group-btn">
-                        <button type="submit" class="btn btn-dark"><i class="far fa-file-excel"></i> Extrat</button>
+                        <button type="submit" class="btn btn-dark">{!!$process_icon!!} </button>
                     </span>
                     </form>
                 <div class="text-end">

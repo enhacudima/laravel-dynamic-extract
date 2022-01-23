@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use File;
 use Storage;
+use Enhacudima\DynamicExtract\Http\Controllers\ExportQueryController;
 
 
 class ExtractControllerReport extends Controller
@@ -69,16 +70,55 @@ class ExtractControllerReport extends Controller
 
 
 
-  public function open_report_extract($id){
+  public function open_report_extract($id,$type){
     $report=ReportNew::where('id',$id)->where('status',1)->first();
     if(!isset($report)){
         return back()->with('error','This report is no longer available');
     }
+    switch ($type) {
+        case 'table':
+            $process_url ='/report/filtro/table';
+            $process_icon ='<i class="far fa-eye"></i>';
+            break;
 
-    return view('extract-view::report.genarete',compact('report'))->with('success','Select your filters to continue');
+        default:
+            $process_url ='/report/filtro';
+            $process_icon ='<i class="far fa-file-excel"></i>';
+            break;
+    }
+
+    return view('extract-view::report.genarete',compact('report','process_url','process_icon'))->with('success','Select your filters to continue');
 
   }
 
+    public function view_filtro(Request $request){
+        $end=date('Y-m-d');
+        $start=date('Y-m-01');
+
+        if (isset($request->start)) {
+              $request->validate([
+                  'start'=>'required|date',
+              ]);
+              $start=Carbon::parse($request->start);
+        }
+        if (isset($request->end)) {
+              $request->validate([
+                  'end'=>'required|date'
+              ]);
+          $end=Carbon::parse($request->end)->endOfDay();
+        }
+
+          $type=$request->type;
+          $filtro=$request->filtro;
+        $q = new ExportQueryController($start,$end,$type,$filtro,$request->all());
+        $eq=$q->query();
+        $heading = $eq['heading'];
+        $data = $eq['data'];
+        $data->take(500);
+        #dd($heading);
+        return view('extract-view::report.tableRows',compact('heading','data'))->with('info','Max 500 rows');
+
+    }
     public function filtro(Request $request)
     {
         $end=date('Y-m-d');
