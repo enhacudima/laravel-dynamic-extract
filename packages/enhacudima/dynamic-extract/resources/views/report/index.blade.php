@@ -3,8 +3,9 @@
 @section('title','Dynamic Extract | Files')
 
 @section('content_header')
+    @if (config('dynamic-extract.auth') ? Auth::user()->can(config('dynamic-extract.middleware.view_all')) : false)
      <a class="btn btn-social-icon btn-github" aria-hidden="true" href="{{url(config('dynamic-extract.prefix').'/meusficheiros/all/deletefile')}}" onclick="return confirm('Are you sure you want to delete all items?');"><i class=" fas fa-trash-alt " style="color: red"></i> Delete All Files</a>
-
+    @endif
 @stop
 
 @section('content')
@@ -37,6 +38,7 @@
         <tbody>
             @if($data)
                 @foreach($data as $value)
+                @if(config('dynamic-extract.auth') ? Auth::user()->can(config('dynamic-extract.middleware.view_all')) || (Auth::user()->can($value->can) && isset($value->can)) || Auth::user()->id == $value->user_id : true)
                     <tr>
                     <td>{{$value->id}}</td>
                     <td>{{$value->user->name ?? ''}} </td>
@@ -68,6 +70,7 @@
                         @endif
                     </td>
                     </tr>
+                @endif
                 @endforeach
             @endif
         </tbody>
