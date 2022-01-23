@@ -6,6 +6,7 @@ use Enhacudima\DynamicExtract\Console\Commands\InstallCommand;
 use Enhacudima\DynamicExtract\Console\Commands\InstallTables;
 use Enhacudima\DynamicExtract\Console\Commands\InstallTablesList;
 use Enhacudima\DynamicExtract\Console\Commands\DeleteExportedFiles;
+use Illuminate\Console\Scheduling\Schedule;
 class DynamicExtractServiceProvider extends ServiceProvider
 {
     /**

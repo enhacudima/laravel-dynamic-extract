@@ -48,8 +48,7 @@ class DeleteExportedFiles extends Command
         {
           Storage::delete($file->path.$file->filename);
         }
-
-        DB::delete('delete from processed_files');
+        ProcessedFiles::truncate();
 
         $this->info('delete all exported files sucessfuly');
     }
