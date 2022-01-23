@@ -18,7 +18,9 @@
     @include('extract-view::vendor.layouts.navbar')
     @yield('content_header')
     <div class="container">
-        @yield('content')
+        <div class="p-3 my-3">
+            @yield('content')
+        </div>
         @include('extract-view::vendor.layouts.footer')
     </div>
 

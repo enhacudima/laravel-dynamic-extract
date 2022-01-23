@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-default navbar-fixed-top">
   <div class="container-fluid">
     <a class="navbar-brand" href="{{url(config('dynamic-extract.prefix').'/report/new')}}">
         <img src="{{asset('enhacudima/dynamic-extract/icons/database.png')}}" alt="" width="30" height="24" class="d-inline-block align-text-top">
@@ -20,5 +20,18 @@
         </li>
       </ul>
     </div>
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+                <a   class="nav-link text-muted" href="https://github.com/enhacudima" target="_blank"><i class="fab fa-github"></i></a>
+            </li>
+        </ul>
   </div>
 </nav>
+<style>
+    .navbar-fixed-top {
+    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}
+</style>
