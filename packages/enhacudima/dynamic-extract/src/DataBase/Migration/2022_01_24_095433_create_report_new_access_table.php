@@ -17,7 +17,10 @@ class CreateReportNewAccessTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->string('email');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->dateTime('expire_at')->nullable();
+            $table->text('access_link')->nullable();
         });
     }
 

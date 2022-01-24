@@ -8,6 +8,7 @@ use Enhacudima\DynamicExtract\Console\Commands\InstallTablesList;
 use Enhacudima\DynamicExtract\Console\Commands\DeleteExportedFiles;
 use Enhacudima\DynamicExtract\Console\Commands\AccessCommand;
 use Enhacudima\DynamicExtract\Console\Commands\AccessRevokeCommand;
+use Enhacudima\DynamicExtract\Console\Commands\AccessListCommand;
 use Illuminate\Console\Scheduling\Schedule;
 class DynamicExtractServiceProvider extends ServiceProvider
 {
@@ -50,6 +51,7 @@ class DynamicExtractServiceProvider extends ServiceProvider
                 DeleteExportedFiles::class,
                 AccessCommand::class,
                 AccessRevokeCommand::class,
+                AccessListCommand::class,
             ]);
         }
     }

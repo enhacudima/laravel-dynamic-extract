@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AccessCommand extends Command
 {
@@ -55,7 +56,7 @@ class AccessCommand extends Command
         $data->setMethod('POST');
         $data->request->add($input);
 
-        $validatorData = Validator::make($bookingRequest->all(), [
+        $validatorData = Validator::make($data->all(), [
             'email' => 'required|email',
             'name' => 'required|string|max:191',
             'time' => 'required|numeric|min:1',
@@ -69,23 +70,25 @@ class AccessCommand extends Command
             foreach ($variable as $key => $value) {
                 $this->error($value);
             }
-        }
-
-        if ($this->confirm('Do you wish to give access to '.$email.'?')) {
-            $user = User::firstOrCreate(
+        }elseif ($this->confirm('Do you wish to give access to '.$email.'?')) {
+            
+            $expire_at = now()->addDays($time);
+            $user = User::updateOrCreate(
                 ['email' => $email],
-                ['name' => $name,]
+                ['name' => $name, 'expire_at' => $expire_at, 'password' => Hash::make(Str::random())]
             );
-
-
             // create a signed URL for login
             $url = URL::temporarySignedRoute(
                 config('dynamic-extract.prefix').'/sign-in',
-                now()->addDays($time),
+                $expire_at,
                 ['user' => $user->id]
             );
 
-            $this->info('login link: '. $url);
+            User::where('id',$user->id)
+                ->update(['access_link' =>$url]);
+
+
+            $this->info('Copy access link: '. $url);
         }
         return Command::SUCCESS;
     }

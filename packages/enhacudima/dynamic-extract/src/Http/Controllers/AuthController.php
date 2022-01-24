@@ -2,16 +2,20 @@
 
 namespace Enhacudima\DynamicExtract\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Http\Response;
 use Enhacudima\DynamicExtract\DataBase\Model\User;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cookie;
 class AuthController extends Controller
 {
 
 
     public function __construct()
     {
+        $this->prefix = config('dynamic-extract.prefix');
     }
 
     public function signIn(Request $request, $user)
@@ -23,19 +27,24 @@ class AuthController extends Controller
 
         // Authenticate the user
         $user = User::findOrFail($request->user);
-        Auth::login($user);
-
+        if($user){
+            $token = (string) Str::uuid();
+            $minutes = 120;
+            $cookie = cookie('access_user_token', $token, $minutes);
+            return redirect($this->prefix.'/report/new')->withCookie($cookie);
+        }
         // Redirect to homepage
-        return redirect(config('dynamic-extract.prefix').'/report/index');
+        return redirect($this->prefix);
     }
 
     public function logout(Request $request)
     {
         // logout
-        Auth::logout();
-
+        Cookie::queue(
+            Cookie::forget('access_user_token')
+        );
         // Redirect to homepage
-        return view('extract-view::welcome');
+        return redirect($this->prefix);
     }
 
 }

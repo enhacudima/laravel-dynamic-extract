@@ -5,21 +5,21 @@ namespace Enhacudima\DynamicExtract\Console\Commands;
 use Illuminate\Console\Command;
 use Enhacudima\DynamicExtract\DataBase\Model\User;
 
-class AccessRevokeCommand extends Command
+class AccessListCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'dynamic-extract:access-revoke {user}';
+    protected $signature = 'dynamic-extract:access-list';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Configure DynamicExtract revoke user access';
+    protected $description = 'Configure DynamicExtract list users access';
 
     /**
      * Create a new command instance.
@@ -39,17 +39,12 @@ class AccessRevokeCommand extends Command
      */
     public function handle()
     {
-        $user = $this->argument('user');
-        
-        $check = User::where('email',$user)->first();
-        
-        if(!$check){
-            $this->error("Could not find any related access");
-            $email = $this->ask('What is revoke email?');
-        }elseif ($this->confirm('Do you wish to revoke access to '.$user.'?')) {
-            User::where('email',$user)->delete();
-            $this->info('Revoked link access: '. $user);
-        }
+        $this->info('DynamicExtract Access list');
+
+        $this->table(
+            ['Code', 'Table name', 'Email', 'Updated','Expire','Access'],
+            User::all(['id', 'name','email', 'updated_at','expire_at', 'access_link'])->toArray()
+        );
         return Command::SUCCESS;
     }
 }

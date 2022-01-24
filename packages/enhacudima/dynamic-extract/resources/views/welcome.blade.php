@@ -6,7 +6,7 @@
 @stop
 
 @section('content')
-    @auth
+    @if( Cookie::get('access_user_token'))
     <center> Let's start!!</center>
     @else
     <center> You must start a session ...</center>
