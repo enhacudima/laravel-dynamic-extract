@@ -4,7 +4,7 @@ namespace Enhacudima\DynamicExtract\Http\Controllers\Reports;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Enhacudima\DynamicExtract\DataBase\Model\ProcessedFiles;
 use Enhacudima\DynamicExtract\Jobs\Notifications\NotifyUserOfCompletedExport;
 use Enhacudima\DynamicExtract\Exports\RelatorioExport;
@@ -22,12 +22,20 @@ class ExtractControllerReport extends Controller
 
         public function __construct()
     {
+        $this->prefix = config('dynamic-extract.prefix');
+
+        $this->middleware(function ($request, $next) {
+            if(!Auth::check()){
+                return redirect($this->prefix.'/'); 
+            }
+            return $next($request);
+        });
+
         if(config('dynamic-extract.auth')){
             $this->middleware('auth');
-            $this->middleware('permission:'.config('dynamic-extract.middleware.extract'));
-            $this->middleware(config('dynamic-extract.middleware.extract'));
+            $this->middleware('permission:'.config('dynamic-extract.middleware.config'));
+            $this->middleware(config('dynamic-extract.middleware.config'));
         }
-        $this->prefix = config('dynamic-extract.prefix');
     }
 
   public function index()

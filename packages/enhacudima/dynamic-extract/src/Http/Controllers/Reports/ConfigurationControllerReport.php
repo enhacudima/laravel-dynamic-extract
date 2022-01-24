@@ -11,20 +11,28 @@ use Enhacudima\DynamicExtract\DataBase\Model\ReportNewTables;
 use Enhacudima\DynamicExtract\DataBase\Model\ReportNewFiltroGroupo;
 use Enhacudima\DynamicExtract\DataBase\Model\ReportNewColumuns;
 use Enhacudima\DynamicExtract\DataBase\Model\ReportNewLists;
+use Illuminate\Support\Facades\Auth;
 use DB;
-use Auth;
 
 class ConfigurationControllerReport extends Controller
 {
 
       public function __construct()
-    {
+      {
+        $this->prefix = config('dynamic-extract.prefix');
+
+        $this->middleware(function ($request, $next) {
+            if(!Auth::check()){
+                return redirect($this->prefix.'/'); 
+            }
+            return $next($request);
+        });
+
         if(config('dynamic-extract.auth')){
             $this->middleware('auth');
             $this->middleware('permission:'.config('dynamic-extract.middleware.config'));
             $this->middleware(config('dynamic-extract.middleware.config'));
         }
-        $this->prefix = config('dynamic-extract.prefix');
     }
 
 
@@ -34,7 +42,9 @@ class ConfigurationControllerReport extends Controller
   	$filtros=ReportNewFiltroGroupo::get();
   	$tables=ReportNewTables::get();
     $permissions=null;
-  	#$permissions=DB::table('permissions')->orderBy('name','asc')->get();
+    if(config('dynamic-extract.auth')){
+  	    $permissions=DB::table(config('dynamic-extract.middleware.permission.table'))->orderBy('name','asc')->get();
+    }
 
   	return view('extract-view::report.config.index',compact('data','filtros','tables','permissions'));
   }

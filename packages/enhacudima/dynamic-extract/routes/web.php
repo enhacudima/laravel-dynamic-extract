@@ -3,12 +3,21 @@
 use Enhacudima\DynamicExtract\Http\Controllers\FileDownloadController;
 use Enhacudima\DynamicExtract\Http\Controllers\Reports\ConfigurationControllerReport;
 use Enhacudima\DynamicExtract\Http\Controllers\Reports\ExtractControllerReport;
+use Enhacudima\DynamicExtract\Http\Controllers\Reports\AuthController;
 
 use Illuminate\Support\Facades\Route;
 
 
+Route::get(config('dynamic-extract.prefix'), function() {
+    return  view('extract-view::welcome');
+});
 
 Route::middleware(['web'])->prefix(config('dynamic-extract.prefix'))->group(function () {
+
+    Route::controller(AuthController::class)->group(function () {
+        Route::get('/sign-in/{user}', 'signIn')->name('sign-in');
+    });
+
     Route::controller(ExtractControllerReport::class)->group(function () {
         Route::get('/report/index', 'index');
         Route::get('/report/new', 'new');

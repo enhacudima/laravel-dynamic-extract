@@ -1,7 +1,7 @@
 <?php
 
 return [
-  #when you set true it require permissions can
+  #when you set true you must have auth in your app and it require permissions can
   'auth' => false,
   #middleware permission
   'middleware' =>[

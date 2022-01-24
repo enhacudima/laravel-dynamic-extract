@@ -1,6 +1,6 @@
 {
     "name": "enhacudima/dynamic-extract",
-    "description": "With this package it will be possible to dynamically extract data from the excel database through date ranges or dynamic filters",
+    "description": "With this package it will be possible to dynamically extract data from database to excel through date ranges or dynamic filters",
     "type": "library",
     "license": "MIT",
     "authors": [

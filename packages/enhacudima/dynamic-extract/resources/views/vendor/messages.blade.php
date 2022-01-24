@@ -49,16 +49,7 @@
             toastr.warning("{{ session('warning') }}");
     @endif
 
-    @if ($errors->any)
-    toastr.options =
-    {
-        "closeButton" : true,
-        "progressBar" : true
-    }
-    @foreach ($errors->all() as $error)
-        toastr.error("{{ $error }}");
-    @endforeach
-    @endif
+
 </script>
 
 

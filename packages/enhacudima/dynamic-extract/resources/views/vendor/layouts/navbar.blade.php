@@ -24,6 +24,12 @@
             <li class="nav-item">
                 <a   class="nav-link text-muted" href="https://github.com/enhacudima" target="_blank"><i class="fab fa-github"></i></a>
             </li>
+            @auth
+            <li class="nav-item">
+                <a   class="nav-link text-muted" href="{{url(config('dynamic-extract.prefix').'/report/config')}}" ><i class="fas fa-sign-out-alt"></i></a>
+            </li>
+            @else
+            @endauth
         </ul>
   </div>
 </nav>
