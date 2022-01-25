@@ -4,10 +4,14 @@
 
 Dynamic-extract is a powerful database extract (Excel) manager for PHP laravel framework with elegant view (no code at the and user). This include great features such as:
 
-- Powerful, Simple, fast.
+- Powerful, Simple & fast.
 - Robust background job processing (queues).
 - Login session (Laravel Auth or built-in verfication token).
 - Dynamic filters.
+- Notifications.
+- Preview data.
+## Why I need this
+Imagine that you have an application that hosts several tables and you must share reports with several users? This package will help you to manage accesses and perform some of the most complex database tasks on the end user, without him having knowledge of database.
 
 ## Filters
 - Data range.
