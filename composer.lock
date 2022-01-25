@@ -499,7 +499,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/enhacudima/dynamic-extract",
-                "reference": "d61874174893c94f1b8fa96955ee56b4cde9dd88"
+                "reference": "c46b8a3ca2d218b4d8a33d3f9616646718d855a8"
             },
             "require": {
                 "maatwebsite/excel": "^3.1",
@@ -533,7 +533,7 @@
                     "email": "kalibredj@outlook.com"
                 }
             ],
-            "description": "With this package it will be possible to dynamically extract data from the excel database through date ranges or dynamic filters",
+            "description": "With this package it will be possible to dynamically extract data from database to excel through date ranges or dynamic filters",
             "transport-options": {
                 "relative": true
             }
