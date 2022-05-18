@@ -11,7 +11,7 @@
         @if(isset($data_favorite))
             @foreach($data_favorite as $favorite)
                 @if(config('dynamic-extract.auth') ? Auth::user()->can($favorite->report->can) : true)
-                    <div class="col-sm-3 pb-3">
+                    <div class="col-sm-3 ">
                         <div class="card text-white bg-info mb-3">
                         <div class="card-header">{{$favorite->report->name}}</div>
                         <div class="card-body">
@@ -25,7 +25,10 @@
                     </div>
                 @endif
             @endforeach
-        {{ $data_favorite->links() }}
+            <div class="w-100"></div>
+            <div class="col-sm-12">
+                {{ $data_favorite->links() }}
+            </div>
 
         @else
             <center> No favorite report!!</center>
@@ -36,8 +39,8 @@
 
     @foreach($data as $report)
         @if(config('dynamic-extract.auth') ? Auth::user()->can($report->can) : true)
-        <div class="col-sm-3 pb-3">
-            <div class="card text-white bg-dark">
+        <div class="col-sm-3 ">
+            <div class="card text-white bg-dark mb-3">
                 <div class="card-body">
                     <h6 class="card-title">{{$report->name}}</h6>
                     <p class="card-text"><small>{{$report->comments}}.</small></p>
@@ -53,7 +56,11 @@
         </div>
         @endif
     @endforeach
-    {{ $data->links() }}
+
+        <div class="w-100"></div>
+        <div class="col-sm-12">
+            {{ $data->links() }}
+        </div>
     </div>
 
 @stop
