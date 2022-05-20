@@ -13,7 +13,7 @@
         <div class="col-md-6">
             <div class="card border-dark mb-3" >
             <div class="card-header">
-                {{$report->name}}
+                <h5 class="card-title">{{$report->name}}</h5>
             </div>
             <div class="card-body text-dark">
                     <form role="form" method="POST" action="{{ url(config('dynamic-extract.prefix').$process_url)}}" enctype="multipart/form-data">
@@ -24,58 +24,73 @@
                         <input name="report_name" value="{{$report->name}}" type="hidden">
                         @if(isset($report->filtro))
                         <!--date-->
-                        <select class="form-control " name="filtro">
+                        <div class="form-group">
+                            <label for="data_filter">Date filter</label>
+                        <select class="form-control form-control-sm" name="filtro" id="data_filter">
                             @foreach($report->sync_filtros as $filtro)
                                 @if($filtro->filtros->type=='date')
                                 <option value="{{$filtro->filtros->value}}">{{$filtro->filtros->name}}</option>
                                 @endif
                             @endforeach
-                        </select> <br>
+                        </select>
+                        </div>
 
                         <div class="row" >
-                                <div class="col-md-6">
-                                    <input class="form-control"  type="date" name="start"  >
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="data_start">Start date</label>
+                                        <input class="form-control form-control-sm"  type="date" name="start" id="data_start" >
                                 </div>
+                            </div>
 
-                                <div class="col-md-6">
-                                    <input class="form-control"  type="date" name="end"  >
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="data_end">End date</label>
+                                        <input class="form-control form-control-sm"  type="date" name="end" id="data_end">
                                 </div>
+                            </div>
                         </div>
-                        <br>
                         <!-- end date-->
                         <!--other filter-->
-                            @foreach($report->sync_filtros as $filtro)
+                            @foreach($report->sync_filtros as $key => $filtro)
                                 @if($filtro->filtros->type=='<=' or $filtro->filtros->type=='>=')
                                 <div class="">
                                     <input type="hidden" name="comparisonColumun[]" value="{{$filtro->filtros->value}}">
                                     <input type="hidden" name="typeColumun[]" value="{{$filtro->filtros->type}}">
-                                    <label>{{$filtro->filtros->name}}</label>
-                                    <input class="form-control" type="text" name="comparisonValue[]" value="Sem filtro" placeholder="{{$filtro->filtros->name}}">
-                                </div><br>
+                                    <div class="form-group">
+                                        <label for="comparisonValue[]">{{$filtro->filtros->name}}</label>
+                                        <input class="form-control form-control-sm" type="text" name="comparisonValue[]"  placeholder="{{$filtro->filtros->name}}">
+                                    </div>
+                                </div>
                                 @endif
                                 @if($filtro->filtros->type=='pesquisa')
                                 <div class="">
                                     <input type="hidden" name="pesquisaColumun[]" value="{{$filtro->filtros->value}}">
-                                    <label>{{$filtro->filtros->name}}</label>
-                                    <input class="form-control" type="text" name="pesquisaValue[]" value="Sem filtro" placeholder="{{$filtro->filtros->name}}">
-                                </div><br>
-                                @endif
-                                @if($filtro->filtros->type=='group')
-                                <div class="">
-                                    <input type="hidden" name="groupColumun[]" value="{{$filtro->filtros->value}}">
+                                    <div  class="form-group">
+                                        <label for="pesquisaValue{$key}">{{$filtro->filtros->name}}</label>
+                                        <div class="input-group">
+                                            <input class="form-control form-control-sm" id="pesquisaValue{$key}" type="text" name="pesquisaValue[]" placeholder="{{$filtro->filtros->name}} ..">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="pesquisaValue{$key}"><i class="fas fa-search"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 @endif
+                                @if($filtro->filtros->type=='group')
+                                    <input type="hidden" name="groupColumun[]" value="{{$filtro->filtros->value}}">
+                                @endif
                                 @if($filtro->filtros->type=='list')
-                                <div class="">
+                                <div class="form-group">
                                     <input type="hidden" name="listColumun[]" value="{{$filtro->filtros->value}}">
-                                    <select class="form-control" name="listValue[]">
-                                        <option value="no_filter" selected="" >Seleciona {{$filtro->filtros->name}} ..</option>
+                                    <select class="form-control form-control-sm" name="listValue[]">
+                                        <option value="no_filter" selected="" >Select {{$filtro->filtros->name}} ..</option>
                                         @foreach($filtro->filtros->lists as $list)
                                             <option value="{{$list->name}}">{{$list->name}}</option>
                                         @endforeach
                                     </select>
 
-                                </div><br>
+                                </div>
                                 @endif
                             @endforeach
                         <!--end other filter-->
