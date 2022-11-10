@@ -67,11 +67,11 @@
                                 <div class="">
                                     <input type="hidden" name="pesquisaColumun[]" value="{{$filtro->filtros->value}}">
                                     <div  class="form-group">
-                                        <label for="pesquisaValue{$key}">{{$filtro->filtros->name}}</label>
+                                        <label for="pesquisaValue{{$key}}">{{$filtro->filtros->name}}</label>
                                         <div class="input-group">
-                                            <input class="form-control form-control-sm" id="pesquisaValue{$key}" type="text" name="pesquisaValue[]" placeholder="{{$filtro->filtros->name}} ..">
+                                            <input class="form-control form-control-sm" id="pesquisaValue{{$key}}" type="text" name="pesquisaValue[]" placeholder="{{$filtro->filtros->name}} ..">
                                             <div class="input-group-append">
-                                                <span class="input-group-text" id="pesquisaValue{$key}"><i class="fas fa-search"></i></span>
+                                                <span class="input-group-text" id="pesquisaValue{{$key}}"><i class="fas fa-search"></i></span>
                                             </div>
                                         </div>
                                     </div>
@@ -103,14 +103,14 @@
                         @endif
                         <hr/>
                     <span class="input-group-btn">
-                        <button type="submit" class="btn btn-dark">{!!$process_icon!!} </button>
+                        <button type="submit" class="btn  btn-dark ">{!!$process_icon!!} </button>
                     </span>
                     </form>
                 <div class="text-right">
                     @if(isset($report->filtro))
-                        <a href="{{url(config('dynamic-extract.prefix').'/report/config/filtro/edit',$report->filtro_r->id)}}" class="btn btn-tool"><i class="fas fa-filter"></i></a>
+                        <a href="{{url(config('dynamic-extract.prefix').'/report/config/filtro/edit',$report->filtro_r->id)}}" class="btn btn-tool btn-sm"><i class="fas fa-filter"></i></a>
                     @endif
-                    <a href="{{url(config('dynamic-extract.prefix').'/report/config/edit',$report->id)}}" class="btn btn-tool"><i class="fas fa-pencil-alt"></i></a>
+                    <a href="{{url(config('dynamic-extract.prefix').'/report/config/edit',$report->id)}}" class="btn btn-tool btn-sm"><i class="fas fa-pencil-alt"></i></a>
                 </div>
             </div>
             </div>
