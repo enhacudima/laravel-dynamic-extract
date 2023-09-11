@@ -921,7 +921,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/enhacudima/dynamic-extract",
-                "reference": "0018447ab2bdd592aa19648c0f283fdfce46ce94"
+                "reference": "09604c2e9d42f9c356b689875c4bc0b412976272"
             },
             "require": {
                 "doctrine/dbal": "^2.6|^3.3",
