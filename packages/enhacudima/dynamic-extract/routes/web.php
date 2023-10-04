@@ -1,5 +1,6 @@
 <?php
 
+use Enhacudima\DynamicExtract\Http\Controllers\AuthController;
 use Enhacudima\DynamicExtract\Http\Controllers\FileDownloadController;
 use Enhacudima\DynamicExtract\Http\Controllers\Reports\API\ExternalPushReport;
 use Enhacudima\DynamicExtract\Http\Controllers\Reports\API\ExternalPushReportConfig;

@@ -95,28 +95,23 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Create New Report</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Create New API</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-          <form method="post" id="list" action="{{url(config('dynamic-extract.prefix').'/report/config/store/new')}}">
+          <form method="post" id="list" action="{{url(config('dynamic-extract.prefix').'/report/config/external/api/store/new')}}">
           @csrf
             <div class="modal-body">
                 <input type="" name="user_id" value="{{Auth::user()->id ?? 0}}" hidden="">
 
                 <input type="text" name="name" required autofocus="" class="form-control" placeholder="Name"><br>
-                <input type="text" name="comments" required autofocus="" class="form-control" placeholder="Comments"><br>
-                <input type="text" name="can" required autofocus="" class="form-control" placeholder="Type a permission"><br>
-                <select name="filtro" class="form-control">
-                  <option value="" disabled="" selected="">Select Group filter..</option>
-                  @foreach($filtros as $filtro)
-                  <option value="{{$filtro->id}}">{{$filtro->name}}</option>
-                  @endforeach
-                  <option value="" >No filter..</option>
-                </select>
-                <br>
-                <select name="table_name" required="" autofocus="" class="form-control">
+                <select name="advance_query" id="advance_query" class="form-control" required autofocus="">
+                  <option value="" disabled="" selected="">Select Query type..</option>
+                  <option value="" >Basic</option>
+                  <option value="1" >Advanced</option>
+                </select><br>
+                <select name="table_name" id="table_name" required="" autofocus="" class="form-control" style="display: none, ma" >
                   <option value="" disabled="" selected="">Select table..</option>
                   @if($tables)
                   @foreach($tables as $table)
@@ -130,6 +125,14 @@
                   @endforeach
                   @endif
                 </select>
+                <textarea type="text" name="text_query" id="text_query"  class="form-control" placeholder="SQL" required autofocus="" style="display: none"></textarea><br>
+                <input type="date" name="expire_at" required autofocus="" class="form-control" placeholder="Type a permission"><br>
+                <select name="paginate" class="form-control" required autofocus="">
+                  <option value="" disabled="" selected="">Use paginate..</option>
+                  <option value="" >False</option>
+                  <option value="1" >True</option>
+                </select>
+
               </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -145,6 +148,23 @@
 @stop
 
 @section('js')
+ <script type="text/javascript">
+       $(document).ready(function(){
+          $("#advance_query").on('change', function(e) {
+            $value=$(this).val();
+            if ($value=="1"){
+
+              $('#text_query').css('display','block');
+              $('#table_name').css('display','none');
+            }else{
+
+             $('#text_query').css('display','none');
+             $('#table_name').css('display','block');
+           }
+
+          })
+       })
+    </script>
 <script type="text/javascript">
 $(document).ready(function() {
     $('#example').DataTable( {
@@ -230,6 +250,5 @@ $(document).ready(function() {
   }
   </style>
 
-</style>
 
 @stop
