@@ -57,11 +57,11 @@
                 <tr>
                 <td>{{$value->id}}</td>
                 <td>{{$value->name}}</td>
-                <td>{{$value->expire_at}}</td>
+                <td>{{ \Carbon\Carbon::parse($value->expire_at)->diffForHumans() }}</td>
                 <td>{{$value->advance_query ? "True" : "False"}}</td>
                 <td>{{$value->text_query}}</td>
                 <td>{{$value->paginate ? "True" : "False"}}</td>
-                <td>{{$value->table->name}}</td>
+                <td>{{isset($value->table) ? $value->table->name : ""}}</td>
                 <td>
                 @if(isset($value->access_link))
                   <a class="" target="_blank" aria-hidden="true" href="{{URL(config('dynamic-extract.prefix')."/api/v1/data/".$value->access_link)}}" >{{URL(config('dynamic-extract.prefix')."/api/v1/data/".$value->access_link)}} <i class="fas fa-external-link-alt"></i></a>
@@ -108,10 +108,10 @@
                 <input type="text" name="name" required autofocus="" class="form-control" placeholder="Name"><br>
                 <select name="advance_query" id="advance_query" class="form-control" required autofocus="">
                   <option value="" disabled="" selected="">Select Query type..</option>
-                  <option value="" >Basic</option>
+                  <option value="0" >Basic</option>
                   <option value="1" >Advanced</option>
                 </select><br>
-                <select name="table_name" id="table_name" required="" autofocus="" class="form-control" style="display: none, ma" >
+                <select name="table_name" id="table_name"  class="form-control" style="display: none, ma" >
                   <option value="" disabled="" selected="">Select table..</option>
                   @if($tables)
                   @foreach($tables as $table)
@@ -125,11 +125,12 @@
                   @endforeach
                   @endif
                 </select>
-                <textarea type="text" name="text_query" id="text_query"  class="form-control" placeholder="SQL" required autofocus="" style="display: none"></textarea><br>
-                <input type="date" name="expire_at" required autofocus="" class="form-control" placeholder="Type a permission"><br>
+                <textarea type="text" name="text_query" id="text_query"  class="form-control" placeholder="SQL"  style="display: none"></textarea><br>
+                <label for="expire_at" class="form-label">Expiry date</label>
+                <input type="date" name="expire_at" id="expire_at" required autofocus="" class="form-control" placeholder="Expiry date"><br>
                 <select name="paginate" class="form-control" required autofocus="">
                   <option value="" disabled="" selected="">Use paginate..</option>
-                  <option value="" >False</option>
+                  <option value="0" >False</option>
                   <option value="1" >True</option>
                 </select>
 

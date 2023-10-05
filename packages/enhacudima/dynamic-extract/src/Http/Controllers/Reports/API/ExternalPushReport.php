@@ -31,7 +31,11 @@ class ExternalPushReport extends Controller
             $test = $this->validateQuery($table->text_query);
             if (!$test)
                 abort(401);
-            $query = DB::connection(config('dynamic-extract.db_connection'))->select($table->text_query);
+                try {
+                    $query = DB::connection(config('dynamic-extract.db_connection'))->select($table->text_query);
+                } catch (\Throwable $th) {
+                    abort(401);
+                }
             if($table->paginate == 1){
                 $data = new Paginator($query, $this->maxPage);
             }else {

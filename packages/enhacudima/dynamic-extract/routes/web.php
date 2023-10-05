@@ -22,6 +22,10 @@ Route::middleware(['web'])->prefix(config('dynamic-extract.prefix'))->group(func
     });
     Route::controller(ExternalPushReportConfig::class)->group(function () {
         Route::get('/report/config/external/api', 'index');
+        Route::post('report/config/external/api/store/new','store');
+        Route::get('/report/config/external/api/delete/{id}', 'delete');
+        Route::get('/report/config/external/api/edit/{id}', 'edit');
+        Route::post('/report/config/external/api/store/edit', 'store_edit');
     });
 
     Route::controller(ExtractControllerReport::class)->group(function () {

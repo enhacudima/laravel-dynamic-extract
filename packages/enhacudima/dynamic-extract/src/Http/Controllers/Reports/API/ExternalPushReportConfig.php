@@ -11,6 +11,7 @@ use Enhacudima\DynamicExtract\DataBase\Model\ReportNewFiltroGroupo;
 use Enhacudima\DynamicExtract\DataBase\Model\ReportNewTables;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class ExternalPushReportConfig extends Controller
 {
@@ -65,31 +66,62 @@ class ExternalPushReportConfig extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:70',
-            'comments' => 'required|string|max:255',
-            'can' => 'required|string',
-            'filtro' => 'nullable|integer',
-            'table_name' => 'required|integer',
+            'advance_query' => 'required|integer',
+            'table_name' => 'required_if:advance_query,==,0',
+            'text_query' => 'required_if:advance_query,==,1',
+            'expire_at' => 'nullable|date',
+            'paginate' => 'nullable',
             'user_id' => 'required|integer',
-        ]);
-        $error = $this->validate_report($request);
-        if (isset($error)) {
-            return back()->with('error', $error);
+        ],
+        [
+            'table_name.required_if'=> 'The text query field is required when advance query is true.',
+            'text_query.required_if' => 'The table name field is required when advance query is false.'
+        ]
+    );
+        $validatedData['access_link'] =  (string) Str::uuid();
+        ReportNewApiExternalPushData::create($validatedData);
+
+        return back()->with('success', 'You have add new api report on list');
+
+    }
+
+
+    public function store_edit(Request $request)
+    {
+        $validatedData = $request->validate(
+            [
+                'name' => 'required|string|max:70',
+                'advance_query' => 'required|integer',
+                'table_name' => 'required_if:advance_query,==,0',
+                'text_query' => 'required_if:advance_query,==,1',
+                'expire_at' => 'nullable|date',
+                'paginate' => 'nullable',
+                'user_id' => 'required|integer',
+            ],
+            [
+                'table_name.required_if' => 'The text query field is required when advance query is true.',
+                'text_query.required_if' => 'The table name field is required when advance query is false.'
+            ]
+        );
+        $data = ReportNewApiExternalPushData::find($request->id);
+        if (!isset($data)) {
+            return back()->with('error', 'This report is no longer available');
         }
+        ReportNewApiExternalPushData::where('id', $request->id)
+            ->update($validatedData);
 
-        ReportNew::create($request->all());
-
-        return back()->with('success', 'You have add new report on list');
+        return back()->with('success', 'You have edited report on list');
 
     }
     public function delete($id)
     {
-        $data = ReportNew::find($id);
+        $data = ReportNewApiExternalPushData::find($id);
         $status = 0;
         if ($data->status == 0) {
             $status = 1;
         }
 
-        ReportNew::where('id', $id)
+        ReportNewApiExternalPushData::where('id', $id)
             ->update(['status' => $status]);
 
         return back()->with('success', 'You changed report on the list');
@@ -97,25 +129,23 @@ class ExternalPushReportConfig extends Controller
 
     public function delete_report($id)
     {
-        $data = ReportNew::find($id);
+        $data = ReportNewApiExternalPushData::find($id);
         if (!isset($data)) {
             return back()->with('error', 'This report is no longer available');
         }
         $data->delete();
-        return redirect($this->prefix . 'report/new')->with('success', 'Report deleted successfully');
+        return redirect($this->prefix . 'report/config/external/api')->with('success', 'Report deleted successfully');
     }
     public function edit($id)
     {
-        $data = ReportNew::find($id);
+        $data = ReportNewApiExternalPushData::find($id);
         if (!isset($data)) {
             return back();
         }
         $filtros = ReportNewFiltroGroupo::get();
         $tables = ReportNewTables::get();
-        $permissions = '';
-        #$permissions=DB::table('permissions')->orderBy('name','asc')->get();
 
-        return view('extract-view::report.config.edit', compact('data', 'filtros', 'tables', 'permissions'));
+        return view('extract-view::report.config.api.edit', compact('data', 'filtros', 'tables'));
 
     }
 
