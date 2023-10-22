@@ -7,8 +7,10 @@ use Illuminate\Routing\Controller;
 use Enhacudima\DynamicExtract\DataBase\Model\Access;
 use Enhacudima\DynamicExtract\DataBase\Model\ReportNew;
 use Enhacudima\DynamicExtract\DataBase\Model\ReportNewApiExternalPushData;
+use Enhacudima\DynamicExtract\DataBase\Model\ReportNewApiExternalSchedule;
 use Enhacudima\DynamicExtract\DataBase\Model\ReportNewFiltroGroupo;
 use Enhacudima\DynamicExtract\DataBase\Model\ReportNewTables;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -147,6 +149,61 @@ class ExternalPushReportConfig extends Controller
 
         return view('extract-view::report.config.api.edit', compact('data', 'filtros', 'tables'));
 
+    }
+
+    public function schedule($id)
+    {
+        $data = ReportNewApiExternalPushData::find($id);
+        if (!isset($data)) {
+            return back();
+        }
+        $filtros = ReportNewFiltroGroupo::get();
+        $tables = ReportNewTables::get();
+        $schedule = ReportNewApiExternalSchedule::where('report_id', $id)->get();
+
+        return view('extract-view::report.config.api.schedule', compact('data', 'filtros', 'tables', 'id','schedule'));
+
+    }
+
+    public function schedule_add(Request $request)
+    {
+        $validatedData = $request->validate(
+            [
+                'report_id' => 'required|exists:report_new_api_external_push_data,id',
+                'method' => ['nullable', Rule::in(['Allow', 'Deny'])],
+                'time_start' => 'required|date_format:H:i',
+                'time_end' => 'required|date_format:H:i|after:time_start',
+                'user_id' => 'required|integer',
+            ],
+            [
+
+            ]
+        );
+        $data = ReportNewApiExternalPushData::find($request->report_id);
+        if (!isset($data)) {
+            return back()->with('error', 'This report is no longer available');
+        }
+        ReportNewApiExternalSchedule::updateOrCreate(
+            [
+                'method' => $request->method,
+                'time_start' => $request->time_start,
+                'time_end' => $request->time_end,
+            ],
+            $validatedData
+        );
+
+        return back()->with('success', 'You have edited report on list');
+
+    }
+
+    public function schedule_remove($id)
+    {
+        $data = ReportNewApiExternalSchedule::find($id);
+        if (!isset($data)) {
+            return back()->with('error', 'This item is no longer available');
+        }
+        $data->delete();
+        return back()->with('success', 'Report deleted successfully');
     }
 
 

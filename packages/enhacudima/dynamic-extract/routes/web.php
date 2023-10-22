@@ -26,6 +26,9 @@ Route::middleware(['web'])->prefix(config('dynamic-extract.prefix'))->group(func
         Route::get('/report/config/external/api/delete/{id}', 'delete');
         Route::get('/report/config/external/api/edit/{id}', 'edit');
         Route::post('/report/config/external/api/store/edit', 'store_edit');
+        Route::get('/report/config/external/api/schedule/{id}','schedule');
+        Route::post('/report/config/external/api/schedule/add', 'schedule_add');
+        Route::get('/report/config/external/api/schedule/delete/{id}','schedule_remove');
     });
 
     Route::controller(ExtractControllerReport::class)->group(function () {

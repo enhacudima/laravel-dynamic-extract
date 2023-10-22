@@ -72,6 +72,7 @@
                     <a class="btn btn-danger btn-sm" aria-hidden="true" href="{{url(config('dynamic-extract.prefix').'/report/config/external/api/delete',$value->id)}}" onclick="return confirm('Are you sure you want to active this item?');" > <i class="fas fa-lock-open"></i></a>
                     @else
                       <a class=" btn btn-success btn-sm" aria-hidden="true" href="{{url(config('dynamic-extract.prefix').'/report/config/external/api/edit',$value->id)}}" ><i class="fas fa-edit"></i></a>
+                      <a class=" btn btn-success btn-sm" aria-hidden="true" href="{{url(config('dynamic-extract.prefix').'/report/config/external/api/schedule',$value->id)}}" ><i class="fas fa-calendar-week"></i></a>
                       <a class="btn btn-danger btn-sm" aria-hidden="true" href="{{url(config('dynamic-extract.prefix').'/report/config/external/api/delete',$value->id)}}" onclick="return confirm('Are you sure you want to deactivate this item?');" ><i class="fas fa-lock"></i></a>
                     @endif
                 </td>
@@ -128,6 +129,7 @@
                 <textarea type="text" name="text_query" id="text_query"  class="form-control" placeholder="SQL"  style="display: none"></textarea><br>
                 <label for="expire_at" class="form-label">Expiry date</label>
                 <input type="date" name="expire_at" id="expire_at" required autofocus="" class="form-control" placeholder="Expiry date"><br>
+                <label for="paginate" class="form-label">Paginate</label>
                 <select name="paginate" class="form-control" required autofocus="">
                   <option value="" disabled="" selected="">Use paginate..</option>
                   <option value="0" >False</option>

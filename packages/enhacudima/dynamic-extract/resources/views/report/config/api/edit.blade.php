@@ -4,6 +4,7 @@
 
 @section('content_header')
     <h1><a class="btn btn-social-icon btn-github"  href="{{ url()->previous() }}"><i class="fa  fa-arrow-left"></i></a>
+    <a class="btn btn-social-icon btn-github"  data-bs-toggle="modal" data-bs-target="#exampleModal" ><i class="fa  fa-plus"></i></a>
     </h1>
 @stop
 
@@ -54,8 +55,9 @@
                 <label for="expire_at" class="form-label">Expiry date</label>
                 <label for="expire_at" class="form-label"  >Expiry date  {{ \Carbon\Carbon::parse($data->expire_at)->format('Y-m-d')}}</label>
                 <input type="date" name="expire_at" id="expire_at" required autofocus="" class="form-control" placeholder="Expiry date" value="{{\Carbon\Carbon::parse($data->expire_at)->format('Y-m-d')}}"><br>
-                <select name="paginate" class="form-control" required autofocus="">
-                  <option value="{{$table->paginate}}"  selected="">{{$data->paginate == 1 ? "True" : "False" }}</option>
+                <label for="paginate" class="form-label">Paginate</label>
+                <select name="paginate" id="paginate" class="form-control" required autofocus="">
+                  <option value="{{$table->paginate}}"  disabled="" selected="">{{$data->paginate == 1 ? "True" : "False" }}</option>
                   <option value="0" >False</option>
                   <option value="1" >True</option>
                 </select><br>
