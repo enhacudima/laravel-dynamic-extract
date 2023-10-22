@@ -3,7 +3,7 @@
 @section('title','Dynamic Extract | Config Edit Report')
 
 @section('content_header')
-    <h1><a class="btn btn-social-icon btn-github"  href="{{ url()->previous() }}"><i class="fa  fa-arrow-left"></i></a>
+    <h1><a class="btn btn-social-icon btn-github"  href="{{url(config('dynamic-extract.prefix').'/report/config/external/api')}}"><i class="fa  fa-arrow-left"></i></a>
     <a class="btn btn-social-icon btn-github"  data-bs-toggle="modal" data-bs-target="#exampleModal" ><i class="fa  fa-plus"></i></a>
     </h1>
 @stop

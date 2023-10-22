@@ -159,7 +159,8 @@ class ExternalPushReportConfig extends Controller
         }
         $filtros = ReportNewFiltroGroupo::get();
         $tables = ReportNewTables::get();
-        $schedule = ReportNewApiExternalSchedule::where('report_id', $id)->get();
+        $schedule = ReportNewApiExternalSchedule::where('report_id', $id)
+            ->orderby('time_end', 'asc')->get();
 
         return view('extract-view::report.config.api.schedule', compact('data', 'filtros', 'tables', 'id','schedule'));
 
