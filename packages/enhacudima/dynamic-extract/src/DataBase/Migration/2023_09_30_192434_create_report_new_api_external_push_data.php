@@ -40,4 +40,5 @@ class CreateReportNewApiExternalPushData extends Migration
     {
         Schema::dropIfExists('repor_new_api_external_push_data');
     }
+
 }
