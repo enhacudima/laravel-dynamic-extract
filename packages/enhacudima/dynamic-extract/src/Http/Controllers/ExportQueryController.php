@@ -186,7 +186,12 @@ class ExportQueryController extends Controller
                 $columuns=[];
                 $countColumuns=sizeof($filtro->filtros->columuns);
                 foreach($filtro->filtros->columuns as $key => $columun){
-                    $columuns[$key]=$columun->name;
+                    //$columuns[$key]=$columun->name;
+                    if ($countColumuns == $key) {
+                        $columuns .= $columun->name;
+                    }else {
+                        $columuns .= $columun->name.", ";
+                    }
                 }
             }
 
