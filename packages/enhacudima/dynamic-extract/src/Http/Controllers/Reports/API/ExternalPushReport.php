@@ -18,7 +18,7 @@ class ExternalPushReport extends Controller
     public $user_id;
     public $user_model;
     public $prefix;
-    public $maxPage = 2;
+    public $maxPage = 1000;
     public function __construct()
     {
         $this->prefix = config('dynamic-extract.prefix');
