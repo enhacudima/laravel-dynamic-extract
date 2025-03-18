@@ -40,7 +40,7 @@ class ExternalPushReport extends Controller
                     abort(401);
                 }
             if($table->paginate == 1){
-                $data = $this->arrayPaginator($query, $request);;
+                $data = $this->arrayPaginator($query, $request);
             }else {
                 $data = $query;
             }
